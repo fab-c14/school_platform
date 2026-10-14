@@ -13,7 +13,12 @@ export async function GET() {
   if (!(await allowed())) {
     return NextResponse.json({ error: "Sign in required." }, { status: 401 });
   }
-  return NextResponse.json(await readSiteForAdmin());
+  try {
+    return NextResponse.json(await readSiteForAdmin());
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "The database could not be reached.";
+    return NextResponse.json({ error: message }, { status: 503 });
+  }
 }
 
 export async function PUT(request: Request) {
@@ -32,7 +37,8 @@ export async function PUT(request: Request) {
     revalidateTag("site", { expire: 0 });
     revalidatePath("/", "layout");
     return NextResponse.json(saved);
-  } catch {
-    return NextResponse.json({ error: "The update could not be saved." }, { status: 400 });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "The update could not be saved.";
+    return NextResponse.json({ error: message }, { status: 400 });
   }
 }

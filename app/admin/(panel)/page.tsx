@@ -11,7 +11,18 @@ export default function AdminPage() {
 }
 
 async function EditorLoader() {
-  const content = await readSiteForAdmin();
+  let content;
+  try {
+    content = await readSiteForAdmin();
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "The database could not be reached.";
+    return (
+      <main>
+        <h1 className="font-serif text-4xl tracking-tight">Database is not connected</h1>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">{message}</p>
+      </main>
+    );
+  }
   return (
     <main>
       <h1 className="font-serif text-4xl tracking-tight">Edit the site</h1>

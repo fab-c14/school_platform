@@ -1,6 +1,7 @@
 import { cacheLife, cacheTag } from "next/cache";
+import { connection } from "next/server";
 import { defaultSite, type SiteContent } from "@/content/site";
-import { getDb } from "@/lib/db";
+import { getDb, mongoConfigured } from "@/lib/db";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -102,18 +103,31 @@ async function readStored() {
   return normalizeSite(existing.body);
 }
 
-export async function getSite() {
-  "use cache";
-  cacheTag("site");
-  cacheLife("max");
-  const content = await readStored();
+function withUrl(content: SiteContent) {
   return {
     ...content,
     url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://xyz-school.example",
   };
 }
 
+async function readCachedSite() {
+  "use cache";
+  cacheTag("site");
+  cacheLife("max");
+  return withUrl(await readStored());
+}
+
+export async function getSite() {
+  if (!mongoConfigured()) return withUrl(normalizeSite(defaultSite));
+  try {
+    return await readCachedSite();
+  } catch {
+    return withUrl(normalizeSite(defaultSite));
+  }
+}
+
 export async function readSiteForAdmin() {
+  await connection();
   return readStored();
 }
 
