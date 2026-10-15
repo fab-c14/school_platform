@@ -62,7 +62,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="border-t border-line">
+      <section id="leadership" className="border-t border-line">
         <div className="mx-auto max-w-7xl px-5 py-16 md:px-8">
           <h2 className="font-serif text-3xl tracking-tight md:text-4xl">{about.leadershipTitle}</h2>
           <p className="mt-4 max-w-[65ch] text-base leading-relaxed text-muted">{about.leadershipNote}</p>

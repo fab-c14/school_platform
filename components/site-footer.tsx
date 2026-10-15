@@ -1,5 +1,5 @@
+import Image from "next/image";
 import Link from "next/link";
-import { Mark } from "@/components/mark";
 
 export function SiteFooter({
   name,
@@ -25,7 +25,7 @@ export function SiteFooter({
       <div className="mx-auto grid max-w-7xl gap-10 px-5 py-12 md:grid-cols-[1.4fr_1fr_1fr] md:px-8">
         <div>
           <div className="flex items-center gap-3">
-            <Mark className="size-8 text-accent" />
+            <Image src="/brand/logo.jpg" alt="" width={48} height={48} className="size-12 object-contain" />
             <p className="font-serif text-xl">{name}</p>
           </div>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-[#d9d0c6]">{note}</p>
@@ -46,9 +46,11 @@ export function SiteFooter({
           <a className="mt-3 block hover:text-white" href={phoneHref}>
             {phoneDisplay}
           </a>
-          <a className="mt-1 block hover:text-white" href={`mailto:${email}`}>
-            {email}
-          </a>
+          {email ? (
+            <a className="mt-1 block hover:text-white" href={`mailto:${email}`}>
+              {email}
+            </a>
+          ) : null}
           <Link href="/contact" className="mt-4 inline-block text-white underline decoration-accent underline-offset-4">
             {contactLabel}
           </Link>

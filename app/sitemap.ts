@@ -1,7 +1,22 @@
 import type { MetadataRoute } from "next";
 import { getSite } from "@/lib/site-store";
 
-const paths = ["", "/about", "/academics", "/admissions", "/campus", "/news", "/contact"];
+const paths = [
+  "",
+  "/about",
+  "/motto",
+  "/academics",
+  "/downloads",
+  "/admissions",
+  "/register",
+  "/campus",
+  "/alumni",
+  "/careers",
+  "/gallery",
+  "/students",
+  "/news",
+  "/contact",
+];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const site = await getSite();

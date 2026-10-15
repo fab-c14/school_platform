@@ -5,34 +5,84 @@
  */
 
 export const defaultSite = {
-  name: "XYZ School",
+  name: "Welkin International School",
   description:
-    "XYZ School is a day school for primary, middle, and secondary students. This is placeholder copy until the school sends its own text.",
+    "Welkin International School in Sevar Thandipora, Lolab. The school motto is Excel with Purpose.",
   ogImage: "/images/og.jpg",
   contact: {
-    addressLines: ["12 Example Lane", "Sample City 000000"],
-    phoneDisplay: "+91 00000 00000",
-    phoneHref: "tel:+910000000000",
-    email: "hello@xyzschool.example",
+    addressLines: ["Sevar Thandipora", "Lolab"],
+    phoneDisplay: "7006384265",
+    phoneHref: "tel:+917006384265",
+    email: "",
     hours: "Monday to Friday, 8:00 to 15:30",
   },
   nav: [
-    { href: "/about", label: "About" },
-    { href: "/academics", label: "Academics" },
-    { href: "/admissions", label: "Admissions" },
-    { href: "/campus", label: "Campus" },
-    { href: "/news", label: "News" },
+    { href: "/", label: "Home" },
+    {
+      href: "/about",
+      label: "School",
+      children: [
+        { href: "/about", label: "About the school" },
+        { href: "/about#leadership", label: "Leadership" },
+      ],
+    },
+    { href: "/motto", label: "Motto" },
+    {
+      href: "/academics",
+      label: "Academics",
+      children: [
+        { href: "/academics", label: "How we teach" },
+        { href: "/academics#week", label: "The school week" },
+      ],
+    },
+    {
+      href: "/downloads",
+      label: "Downloads",
+      children: [{ href: "/downloads", label: "Notices and lists" }],
+    },
+    {
+      href: "/admissions",
+      label: "Admissions",
+      children: [
+        { href: "/admissions", label: "How to apply" },
+        { href: "/register", label: "Online registration" },
+      ],
+    },
+    {
+      href: "/campus",
+      label: "Facilities",
+      children: [
+        { href: "/campus", label: "Campus" },
+        { href: "/campus#places", label: "Labs, library, and sport" },
+      ],
+    },
+    { href: "/alumni", label: "Alumni" },
+    { href: "/register", label: "Online Registration" },
+    { href: "/careers", label: "Careers" },
+    {
+      href: "/gallery",
+      label: "Gallery",
+      children: [{ href: "/gallery", label: "Photographs" }],
+    },
+    {
+      href: "/students",
+      label: "Student Corner",
+      children: [
+        { href: "/news", label: "News" },
+        { href: "/students", label: "Student life" },
+      ],
+    },
   ],
-  contactLabel: "Contact",
+  contactLabel: "Contact Us",
   home: {
-    title: "XYZ School",
+    title: "Welkin International School",
     description:
-      "A day school from the early years through secondary, with small classes and a steady daily rhythm.",
-    eyebrow: "Day school",
-    headline: ["Room to learn,", "and time to grow."],
-    lede: "A day school from the early years through secondary, with small classes and a steady daily rhythm.",
+      "Welkin International School, Sevar Thandipora, Lolab. Excel with Purpose.",
+    eyebrow: "Sevar Thandipora, Lolab",
+    headline: ["Excel with", "purpose."],
+    lede: "Welkin International School at Sevar Thandipora, Lolab. Call the office on 7006384265.",
     primaryCta: { href: "/admissions", label: "Admissions" },
-    secondaryCta: { href: "/campus", label: "Campus" },
+    secondaryCta: { href: "/campus", label: "Facilities" },
     heroImage: {
       src: "/images/campus.jpg",
       alt: "Courtyard of a low brick school building with a shade tree",
@@ -63,7 +113,7 @@ export const defaultSite = {
       },
       {
         href: "/campus",
-        title: "Campus",
+        title: "Facilities",
         body: "Labs, library, sport, art, the bus route, and how the campus is kept safe.",
         image: "/images/library.jpg",
         alt: "School library with wooden shelves and a long reading table",
@@ -94,8 +144,8 @@ export const defaultSite = {
   about: {
     title: "About",
     description:
-      "The story, values, and leadership of XYZ School. Placeholder text until the school sends its own.",
-    lede: "XYZ School is written here as a neighbourhood day school. Swap this page when the real history arrives.",
+      "About Welkin International School in Sevar Thandipora, Lolab.",
+    lede: "The school stands in Sevar Thandipora, Lolab. A fuller history can be added when the office sends it.",
     story: {
       title: "Built for a full school day, not a brochure.",
       paragraphs: [
@@ -134,7 +184,7 @@ export const defaultSite = {
   academics: {
     title: "Academics",
     description:
-      "Primary, middle, and secondary at XYZ School, plus how a week of classes is organised.",
+      "Primary, middle, and secondary at Welkin International School.",
     lede: "Three stages, one campus. Subject lists here are samples and should be replaced with the school’s real scheme.",
     stages: [
       {
@@ -176,7 +226,7 @@ export const defaultSite = {
   admissions: {
     title: "Admissions",
     description:
-      "How to apply to XYZ School, with sample dates for the coming year. Confirm every date with the school office.",
+      "How to apply to Welkin International School. Confirm dates with the office on 7006384265.",
     lede: "The steps are real enough to read. The dates are samples and must be replaced before this page is published.",
     steps: [
       {
@@ -207,9 +257,9 @@ export const defaultSite = {
     ],
   },
   campus: {
-    title: "Campus",
+    title: "Facilities",
     description:
-      "Labs, library, sports ground, art room, transport, and safety at XYZ School.",
+      "Labs, library, sports ground, art room, transport, and safety at Welkin International School, Sevar Thandipora.",
     lede: "A compact campus: class, books, labs, and a field within one gate.",
     places: [
       {
@@ -252,7 +302,7 @@ export const defaultSite = {
   news: {
     title: "News",
     description:
-      "Sample stories from XYZ School. These are placeholders and will be replaced with real events.",
+      "News from Welkin International School. Stories here are samples until the office sends real notices.",
     lede: "Three sample stories so the page has a shape. Delete them when the first real notice is ready.",
     items: [
       {
@@ -275,7 +325,7 @@ export const defaultSite = {
   contactPage: {
     title: "Contact",
     description:
-      "Phone, email, and address for XYZ School, plus a short note to the office.",
+      "Phone and address for Welkin International School, Sevar Thandipora, Lolab.",
     lede: "The office answers on school days during the hours below. Numbers and the address are placeholders.",
   },
   form: {
@@ -293,7 +343,7 @@ export const defaultSite = {
     submit: "Check note",
   },
   footer: {
-    note: "Placeholder website for XYZ School. Text and photographs can be replaced without rebuilding the pages.",
+    note: "Welkin International School, Sevar Thandipora, Lolab. Excel with Purpose.",
   },
 };
 

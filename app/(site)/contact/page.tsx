@@ -33,10 +33,14 @@ export default async function ContactPage() {
             <a className="mt-1 block text-base underline decoration-accent underline-offset-4" href={site.contact.phoneHref}>
               {site.contact.phoneDisplay}
             </a>
-            <p className="mt-8 text-sm text-muted">Email</p>
-            <a className="mt-1 block text-base underline decoration-accent underline-offset-4" href={`mailto:${site.contact.email}`}>
-              {site.contact.email}
-            </a>
+            {site.contact.email ? (
+              <>
+                <p className="mt-8 text-sm text-muted">Email</p>
+                <a className="mt-1 block text-base underline decoration-accent underline-offset-4" href={`mailto:${site.contact.email}`}>
+                  {site.contact.email}
+                </a>
+              </>
+            ) : null}
           </address>
           <div>
             <h2 className="font-serif text-3xl tracking-tight">{site.form.title}</h2>

@@ -33,9 +33,20 @@ function sanitize(value: unknown, fallback: unknown, key = ""): unknown {
     return fallback.map((item, index) => {
       const row = isRecord(item) ? item : { href: "", label: "" };
       const next = isRecord(incoming[index]) ? incoming[index] : {};
+      const childSource = Array.isArray(row.children) ? row.children : [];
+      const incomingChildren = Array.isArray(next.children) ? next.children : [];
+      const children = childSource.map((child, childIndex) => {
+        const base = isRecord(child) ? child : { href: "", label: "" };
+        const incomingChild = isRecord(incomingChildren[childIndex]) ? incomingChildren[childIndex] : {};
+        return {
+          href: String(base.href),
+          label: asText(incomingChild.label, String(base.label), 48),
+        };
+      });
       return {
-        href: row.href,
+        href: String(row.href),
         label: asText(next.label, String(row.label), 40),
+        ...(children.length ? { children } : {}),
       };
     });
   }
@@ -106,7 +117,7 @@ async function readStored() {
 function withUrl(content: SiteContent) {
   return {
     ...content,
-    url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://xyz-school.example",
+    url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://newschool-beige.vercel.app",
   };
 }
 

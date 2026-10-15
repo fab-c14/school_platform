@@ -88,7 +88,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="border-t border-line bg-[#efe8dc]">
+      <section className="border-t border-line bg-[#e7edf5]">
         <div className="mx-auto grid max-w-7xl gap-4 px-5 py-16 md:px-8 lg:grid-cols-12">
           {home.paths.map((path, index) => (
             <Link

@@ -14,7 +14,17 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
       >
         Skip to content
       </a>
-      <SiteHeader name={site.name} nav={[...site.nav]} contactLabel={site.contactLabel} />
+      <SiteHeader
+        name={site.name}
+        nav={site.nav.map((item) => ({
+          href: item.href,
+          label: item.label,
+          children: "children" in item ? item.children : undefined,
+        }))}
+        contactLabel={site.contactLabel}
+        phoneDisplay={site.contact.phoneDisplay}
+        phoneHref={site.contact.phoneHref}
+      />
       <div id="content" className="flex-1">
         {children}
       </div>

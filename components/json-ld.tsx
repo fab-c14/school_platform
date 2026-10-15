@@ -19,7 +19,7 @@ export function SchoolJsonLd({
     name,
     url,
     description,
-    email,
+    ...(email ? { email } : {}),
     telephone,
     address: {
       "@type": "PostalAddress",
