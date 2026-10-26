@@ -34,3 +34,53 @@ body {
 .font-serif {
   font-family: var(--font-newsreader), Georgia, serif;
 }
+
+.blob {
+  position: absolute;
+  border-radius: 60% 40% 55% 45% / 48% 62% 38% 52%;
+  background: radial-gradient(circle at 32% 30%, rgb(214 244 248 / 0.95), rgb(120 196 214 / 0.45) 46%, transparent 72%);
+  filter: blur(8px);
+  transform: translate3d(0, 0, 0);
+  animation: blob-drift 22s ease-in-out infinite;
+}
+
+.blob-a {
+  width: 28rem;
+  height: 28rem;
+  top: -6rem;
+  left: -8rem;
+}
+
+.blob-b {
+  width: 34rem;
+  height: 30rem;
+  right: -10rem;
+  bottom: -8rem;
+  animation-delay: -8s;
+  border-radius: 46% 54% 62% 38% / 42% 48% 52% 58%;
+}
+
+.blob-c {
+  width: 16rem;
+  height: 16rem;
+  top: 18%;
+  right: 28%;
+  animation-delay: -14s;
+  opacity: 0.7;
+}
+
+@keyframes blob-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(1.5rem, -1.25rem, 0) scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob {
+    animation: none;
+  }
+}

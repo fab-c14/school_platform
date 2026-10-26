@@ -25,7 +25,10 @@ export function SiteFooter({
       <div className="mx-auto grid max-w-7xl gap-10 px-5 py-12 md:grid-cols-[1.4fr_1fr_1fr] md:px-8">
         <div>
           <div className="flex items-center gap-3">
-            <Image src="/brand/logo.jpg" alt="" width={48} height={48} className="size-12 object-contain" />
+            <span className="relative grid size-12 place-items-center">
+              <span className="absolute -inset-1 rounded-full bg-paper/20 blur-sm" aria-hidden />
+              <Image src="/brand/logo.jpg" alt="" width={48} height={48} className="relative size-12 rounded-full object-cover" />
+            </span>
             <p className="font-serif text-xl">{name}</p>
           </div>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-paper/80">{note}</p>

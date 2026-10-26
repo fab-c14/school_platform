@@ -28,43 +28,50 @@ export default async function HomePage() {
         telephone={site.contact.phoneDisplay}
         streetAddress={site.contact.addressLines[0]}
       />
-      <section className="mx-auto grid max-w-7xl items-center gap-10 px-5 py-10 md:px-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:py-14">
-        <Reveal>
-          <p className="text-sm text-accent">{home.eyebrow}</p>
-          <h1 className="mt-3 font-serif text-4xl leading-[1.1] tracking-tight text-ink md:text-6xl">
-            <span className="block">{home.headline[0]}</span>
-            <span className="block">{home.headline[1]}</span>
-          </h1>
-          <p className="mt-5 max-w-[38ch] text-base leading-relaxed text-muted">
-            {home.lede}
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href={home.primaryCta.href}
-              className="inline-flex items-center bg-accent px-5 py-3 text-sm text-white active:scale-[0.98]"
-            >
-              {home.primaryCta.label}
-            </Link>
-            <Link
-              href={home.secondaryCta.href}
-              className="inline-flex items-center border border-ink px-5 py-3 text-sm text-ink active:scale-[0.98]"
-            >
-              {home.secondaryCta.label}
-            </Link>
-          </div>
-        </Reveal>
-        <Reveal delay={0.08}>
-          <div className="relative aspect-[16/10] overflow-hidden bg-line">
-            <Photo
-              src={home.heroImage.src}
-              alt={home.heroImage.alt}
-              fill
-              priority
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="object-cover"
-            />
-          </div>
-        </Reveal>
+      <section className="relative overflow-hidden">
+        <div className="pointer-events-none absolute inset-0" aria-hidden>
+          <span className="blob blob-a" />
+          <span className="blob blob-b" />
+          <span className="blob blob-c" />
+        </div>
+        <div className="relative mx-auto grid min-h-[78dvh] max-w-7xl items-center gap-12 px-5 py-16 md:px-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.15fr)] lg:py-20">
+          <Reveal>
+            <p className="text-sm text-accent">{home.eyebrow}</p>
+            <h1 className="mt-3 font-serif text-5xl leading-[1.08] tracking-tight text-ink md:text-6xl">
+              <span className="block">{home.headline[0]}</span>
+              <span className="block">{home.headline[1]}</span>
+            </h1>
+            <p className="mt-5 max-w-[38ch] text-base leading-relaxed text-muted">
+              {home.lede}
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href={home.primaryCta.href}
+                className="inline-flex items-center bg-accent px-5 py-3 text-sm text-white transition duration-200 hover:-translate-y-px active:scale-[0.98]"
+              >
+                {home.primaryCta.label}
+              </Link>
+              <Link
+                href={home.secondaryCta.href}
+                className="inline-flex items-center border border-ink px-5 py-3 text-sm text-ink transition duration-200 hover:-translate-y-px active:scale-[0.98]"
+              >
+                {home.secondaryCta.label}
+              </Link>
+            </div>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-[1.75rem] bg-line shadow-[0_24px_60px_rgba(8,69,86,0.16)] lg:aspect-[5/4] lg:min-h-[32rem]">
+              <Photo
+                src={home.heroImage.src}
+                alt={home.heroImage.alt}
+                fill
+                priority
+                sizes="(min-width: 1024px) 56vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+          </Reveal>
+        </div>
       </section>
 
       <section className="border-t border-line">

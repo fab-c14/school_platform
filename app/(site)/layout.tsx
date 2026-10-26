@@ -7,7 +7,7 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
   const site = await getSite();
 
   return (
-    <div className="flex min-h-full flex-1 flex-col">
+    <div className="relative flex min-h-full flex-1 flex-col">
       <a
         href="#content"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-ink focus:px-3 focus:py-2 focus:text-paper"
