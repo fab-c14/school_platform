@@ -28,10 +28,10 @@ export function SiteFooter({
             <Image src="/brand/logo.jpg" alt="" width={48} height={48} className="size-12 object-contain" />
             <p className="font-serif text-xl">{name}</p>
           </div>
-          <p className="mt-4 max-w-sm text-sm leading-relaxed text-[#d9d0c6]">{note}</p>
+          <p className="mt-4 max-w-sm text-sm leading-relaxed text-paper/80">{note}</p>
         </div>
         <div>
-          <p className="text-sm text-[#d9d0c6]">Visit</p>
+          <p className="text-sm text-paper/80">Visit</p>
           <address className="mt-3 text-sm not-italic leading-relaxed">
             {addressLines.map((line) => (
               <span key={line} className="block">
@@ -42,7 +42,7 @@ export function SiteFooter({
           </address>
         </div>
         <div className="text-sm leading-relaxed">
-          <p className="text-[#d9d0c6]">Office</p>
+          <p className="text-paper/80">Office</p>
           <a className="mt-3 block hover:text-white" href={phoneHref}>
             {phoneDisplay}
           </a>

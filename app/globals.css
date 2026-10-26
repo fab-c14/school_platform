@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --paper: #f6f4f1;
-  --ink: #142033;
-  --muted: #4e5968;
-  --line: #d9dde3;
-  --accent: #8d1e2d;
-  --deep: #12284a;
+  --paper: #f3fbfd;
+  --ink: #102e36;
+  --muted: #3d6270;
+  --line: #c5e4ec;
+  --accent: #0b7494;
+  --deep: #084556;
 }
 
 @theme inline {
@@ -27,8 +27,8 @@ body {
 }
 
 ::selection {
-  background: #8d1e2d;
-  color: #fff8f4;
+  background: #0b7494;
+  color: #f3fbfd;
 }
 
 .font-serif {

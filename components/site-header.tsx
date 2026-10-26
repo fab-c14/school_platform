@@ -76,7 +76,7 @@ export function SiteHeader({
                 <ul className="invisible absolute left-0 top-full z-50 min-w-52 border border-line bg-paper py-2 opacity-0 shadow-sm group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
                   {item.children.map((child) => (
                     <li key={child.href + child.label}>
-                      <Link href={child.href} className="block px-4 py-2 text-sm text-ink hover:bg-[#e7edf5] hover:text-accent">
+                      <Link href={child.href} className="block px-4 py-2 text-sm text-ink hover:bg-[#e5f6f8] hover:text-accent">
                         {child.label}
                       </Link>
                     </li>
@@ -116,7 +116,7 @@ export function SiteHeader({
                     ) : null}
                   </div>
                   {expanded && item.children?.length ? (
-                    <ul className="bg-[#e7edf5] pb-2">
+                    <ul className="bg-[#e5f6f8] pb-2">
                       {item.children.map((child) => (
                         <li key={child.href + child.label}>
                           <Link

@@ -88,7 +88,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="border-t border-line bg-[#e7edf5]">
+      <section className="border-t border-line bg-[#e5f6f8]">
         <div className="mx-auto grid max-w-7xl gap-4 px-5 py-16 md:px-8 lg:grid-cols-12">
           {home.paths.map((path, index) => (
             <Link
@@ -108,7 +108,7 @@ export default async function HomePage() {
               <span className="absolute inset-0 bg-gradient-to-t from-deep/90 via-deep/25 to-transparent" />
               <span className="relative">
                 <span className="font-serif text-3xl">{path.title}</span>
-                <span className="mt-2 block max-w-sm text-sm leading-relaxed text-[#f3eee6]">
+                <span className="mt-2 block max-w-sm text-sm leading-relaxed text-paper/90">
                   {path.body}
                 </span>
               </span>
@@ -125,7 +125,7 @@ export default async function HomePage() {
               alt={home.facilities.image.alt}
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
-              className="object-cover"
+              className="object-cover object-[center_20%]"
             />
           </div>
           <div>
@@ -168,7 +168,7 @@ export default async function HomePage() {
             <h2 className="font-serif text-3xl tracking-tight md:text-5xl">
               {home.contactBand.title}
             </h2>
-            <p className="mt-4 max-w-[65ch] text-sm leading-relaxed text-[#d9d0c6]">
+            <p className="mt-4 max-w-[65ch] text-sm leading-relaxed text-paper/80">
               {home.contactBand.body}
             </p>
           </div>

@@ -11,11 +11,11 @@ export default function MottoPage() {
   return (
     <PageShell
       title="Excel with Purpose"
-      lede="This is the motto of Welkin International School, Sevar Thandipora, Lolab. It sits under the school crest."
+      lede="Excel with Purpose is the motto on the crest of Welkin International School, Sever Thandipora, Lolab."
     >
       <div className="mx-auto max-w-3xl px-5 py-16 md:px-8">
         <p className="text-base leading-relaxed text-muted">
-          The crest shows an open book and a graduate’s cap, with the words Welkin International School around the rim and Sevar Lolab beneath it. The school can replace this note with the full meaning of the motto when it is ready.
+          The crest shows an open book and a graduate's cap. Around it are the words Welkin International School, and beneath it, Sevar Lolab. The Chairman asks that every child grow with purpose: intellect, character, and faith together. He calls that duty an Amanah, a sacred trust.
         </p>
       </div>
     </PageShell>

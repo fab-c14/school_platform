@@ -46,7 +46,7 @@ export default async function CampusPage() {
             {page.more.map((item) => (
               <li key={item.title}>
                 <h3 className="font-serif text-2xl">{item.title}</h3>
-                <p className="mt-3 max-w-[65ch] text-sm leading-relaxed text-[#d9d0c6]">{item.body}</p>
+                <p className="mt-3 max-w-[65ch] text-sm leading-relaxed text-paper/80">{item.body}</p>
               </li>
             ))}
           </ul>

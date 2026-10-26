@@ -4,7 +4,7 @@ import { getSite } from "@/lib/site-store";
 
 export async function generateMetadata() {
   const site = await getSite();
-  return pageMetadata(site, "Careers", "Work at Welkin International School, Sevar Thandipora, Lolab.", "/careers");
+  return pageMetadata(site, "Careers", "Work at Welkin International School, Sever Thandipora, Lolab.", "/careers");
 }
 
 export default function CareersPage() {

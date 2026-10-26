@@ -42,7 +42,7 @@ export default async function AcademicsPage() {
         </div>
       </section>
 
-      <section id="week" className="border-t border-line bg-[#e7edf5]">
+      <section id="week" className="border-t border-line bg-[#e5f6f8]">
         <div className="mx-auto max-w-7xl px-5 py-16 md:px-8">
           <h2 className="font-serif text-3xl tracking-tight md:text-4xl">{page.practiceTitle}</h2>
           <ul className="mt-10 grid gap-10 md:grid-cols-3">

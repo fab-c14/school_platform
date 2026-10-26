@@ -33,13 +33,13 @@ export default async function AboutPage() {
               ))}
             </div>
           </div>
-          <div className="relative aspect-[4/3] overflow-hidden bg-line">
+          <div className="relative mx-auto aspect-[3/4] w-full max-w-md overflow-hidden bg-line">
             <Photo
               src={about.story.image.src}
               alt={about.story.image.alt}
               fill
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="object-cover"
+              sizes="(min-width: 1024px) 28rem, 100vw"
+              className="object-cover object-top"
             />
           </div>
         </div>
@@ -66,7 +66,7 @@ export default async function AboutPage() {
         <div className="mx-auto max-w-7xl px-5 py-16 md:px-8">
           <h2 className="font-serif text-3xl tracking-tight md:text-4xl">{about.leadershipTitle}</h2>
           <p className="mt-4 max-w-[65ch] text-base leading-relaxed text-muted">{about.leadershipNote}</p>
-          <ul className="mt-8 grid gap-px bg-line sm:grid-cols-3">
+          <ul className="mt-8 grid gap-px bg-line sm:grid-cols-2 lg:max-w-xl">
             {about.leaders.map((leader) => (
               <li key={leader.role} className="bg-paper p-6">
                 <p className="text-sm text-muted">{leader.role}</p>

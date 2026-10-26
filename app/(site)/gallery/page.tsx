@@ -4,12 +4,15 @@ import { pageMetadata } from "@/lib/metadata";
 import { getSite } from "@/lib/site-store";
 
 const photos = [
-  { src: "/images/campus.jpg", alt: "School courtyard" },
-  { src: "/images/classroom.jpg", alt: "Classroom" },
-  { src: "/images/lab.jpg", alt: "Science laboratory" },
-  { src: "/images/library.jpg", alt: "Library" },
-  { src: "/images/sports.jpg", alt: "Sports ground" },
-  { src: "/images/art.jpg", alt: "Art room" },
+  { src: "/images/gathering.jpg", alt: "Students and teachers outdoors with mountains behind them" },
+  { src: "/images/girls-yard.jpg", alt: "Girls lined up in the school yard" },
+  { src: "/images/campus-group.jpg", alt: "Younger students outside the school building" },
+  { src: "/images/assembly.jpg", alt: "Students at an outdoor gathering" },
+  { src: "/images/class-one.jpg", alt: "A class standing against a blue wall" },
+  { src: "/images/class-two.jpg", alt: "Girls and boys seated and standing in class" },
+  { src: "/images/class-three.jpg", alt: "A larger primary class in uniform" },
+  { src: "/images/boys-outing.jpg", alt: "Boys in uniform on an outing" },
+  { src: "/images/chairman.jpg", alt: "Iftekhar Ul Akbar, Chairman" },
 ];
 
 export async function generateMetadata() {
@@ -21,7 +24,7 @@ export default function GalleryPage() {
   return (
     <PageShell
       title="Gallery"
-      lede="A first set of photographs. The school can replace these with pictures from Sevar Thandipora."
+      lede="Photographs sent by Welkin International School, Sever Thandipora, Lolab."
     >
       <ul className="mx-auto grid max-w-7xl gap-4 px-5 py-16 sm:grid-cols-2 md:px-8 lg:grid-cols-3">
         {photos.map((photo) => (

@@ -8,7 +8,7 @@ export async function generateMetadata() {
   return pageMetadata(
     site,
     "Online registration",
-    "How to start an enquiry at Welkin International School, Sevar Thandipora, Lolab.",
+    "How to start an enquiry at Welkin International School, Sever Thandipora, Lolab.",
     "/register",
   );
 }

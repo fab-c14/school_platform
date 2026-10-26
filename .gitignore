@@ -39,6 +39,9 @@ yarn-error.log*
 /public/uploads/*
 !/public/uploads/.gitkeep
 
+# client source files, not the public site
+/clientmaterial
+
 # vercel
 .vercel
 
