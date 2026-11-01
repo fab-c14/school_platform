@@ -8,6 +8,8 @@ export function SiteFooter({
   hours,
   phoneHref,
   phoneDisplay,
+  phoneAltHref,
+  phoneAltDisplay,
   email,
   contactLabel,
 }: {
@@ -17,12 +19,14 @@ export function SiteFooter({
   hours: string;
   phoneHref: string;
   phoneDisplay: string;
+  phoneAltHref: string;
+  phoneAltDisplay: string;
   email: string;
   contactLabel: string;
 }) {
   return (
     <footer className="mt-auto border-t border-line bg-deep text-paper">
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-12 md:grid-cols-[1.4fr_1fr_1fr] md:px-8">
+      <div className="mx-auto grid max-w-[1400px] gap-10 px-5 py-12 md:grid-cols-[1.4fr_1fr_1fr] md:px-8">
         <div>
           <div className="flex items-center gap-3">
             <span className="relative grid size-12 place-items-center">
@@ -48,6 +52,9 @@ export function SiteFooter({
           <p className="text-paper/80">Office</p>
           <a className="mt-3 block hover:text-white" href={phoneHref}>
             {phoneDisplay}
+          </a>
+          <a className="mt-1 block hover:text-white" href={phoneAltHref}>
+            {phoneAltDisplay}
           </a>
           {email ? (
             <a className="mt-1 block hover:text-white" href={`mailto:${email}`}>

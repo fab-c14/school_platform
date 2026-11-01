@@ -11,7 +11,7 @@ export default async function NewsPage() {
   const site = await getSite();
   return (
     <main>
-      <header className="mx-auto max-w-7xl px-5 pb-10 pt-10 md:px-8 md:pt-14">
+      <header className="mx-auto max-w-[1400px] px-5 pb-10 pt-10 md:px-8 md:pt-14">
         <h1 className="max-w-3xl font-serif text-4xl leading-[1.1] tracking-tight md:text-6xl">
           {site.news.title}
         </h1>

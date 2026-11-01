@@ -41,6 +41,7 @@ yarn-error.log*
 
 # client source files, not the public site
 /clientmaterial
+/test
 
 # vercel
 .vercel

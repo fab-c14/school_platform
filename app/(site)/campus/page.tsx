@@ -12,7 +12,7 @@ export default async function CampusPage() {
 
   return (
     <main>
-      <header className="mx-auto max-w-7xl px-5 pb-10 pt-10 md:px-8 md:pt-14">
+      <header className="mx-auto max-w-[1400px] px-5 pb-10 pt-10 md:px-8 md:pt-14">
         <h1 className="max-w-3xl font-serif text-4xl leading-[1.1] tracking-tight md:text-6xl">
           {page.title}
         </h1>
@@ -20,7 +20,7 @@ export default async function CampusPage() {
       </header>
 
       <section id="places" className="border-t border-line">
-        <ul className="mx-auto grid max-w-7xl gap-8 px-5 py-16 md:px-8 lg:grid-cols-2">
+        <ul className="mx-auto grid max-w-[1400px] gap-8 px-5 py-16 md:px-8 lg:grid-cols-2">
           {page.places.map((place) => (
             <li key={place.title}>
               <div className="relative aspect-[4/3] overflow-hidden bg-line">
@@ -40,7 +40,7 @@ export default async function CampusPage() {
       </section>
 
       <section className="border-t border-line bg-deep text-paper">
-        <div className="mx-auto max-w-7xl px-5 py-16 md:px-8">
+        <div className="mx-auto max-w-[1400px] px-5 py-16 md:px-8">
           <h2 className="font-serif text-3xl tracking-tight md:text-4xl">{page.moreTitle}</h2>
           <ul className="mt-10 grid gap-10 md:grid-cols-2">
             {page.more.map((item) => (

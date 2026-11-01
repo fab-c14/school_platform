@@ -1,7 +1,7 @@
 import { cacheLife, cacheTag } from "next/cache";
 import { connection } from "next/server";
 import { defaultSite, type SiteContent } from "@/content/site";
-import { getDb, mongoConfigured } from "@/lib/db";
+import { getSupabase, supabaseConfigured } from "@/lib/supabase";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -15,6 +15,9 @@ function safeSrc(value: unknown, fallback: string) {
     value.startsWith("/uploads/") ||
     value.startsWith("/api/media/")
   ) {
+    return value;
+  }
+  if (/^https:\/\/[a-z0-9-]+\.supabase\.co\/storage\/v1\/object\/public\/(media|documents)\//.test(value)) {
     return value;
   }
   return fallback;
@@ -98,20 +101,17 @@ export function normalizeSite(input: unknown): SiteContent {
   return sanitize(input, defaultSite) as SiteContent;
 }
 
-async function contentCollection() {
-  const db = await getDb();
-  return db.collection<{ key: string; body: SiteContent }>("content");
-}
-
 async function readStored() {
-  const content = await contentCollection();
-  const existing = await content.findOne({ key: "site" });
-  if (!existing) {
+  const supabase = getSupabase();
+  const { data, error } = await supabase.from("site_content").select("body").eq("key", "site").maybeSingle();
+  if (error) throw new Error("The site record could not be read. Run supabase/schema.sql in the Supabase SQL editor.");
+  if (!data) {
     const body = normalizeSite(defaultSite);
-    await content.insertOne({ key: "site", body });
+    const inserted = await supabase.from("site_content").insert({ key: "site", body });
+    if (inserted.error) throw new Error("The site record could not be created.");
     return body;
   }
-  return normalizeSite(existing.body);
+  return normalizeSite(data.body);
 }
 
 function withUrl(content: SiteContent) {
@@ -129,7 +129,7 @@ async function readCachedSite() {
 }
 
 export async function getSite() {
-  if (!mongoConfigured()) return withUrl(normalizeSite(defaultSite));
+  if (!supabaseConfigured()) return withUrl(normalizeSite(defaultSite));
   try {
     return await readCachedSite();
   } catch {
@@ -146,7 +146,10 @@ export async function writeSite(input: unknown) {
   const content = normalizeSite(input);
   const digits = content.contact.phoneDisplay.replace(/[^\d+]/g, "");
   content.contact.phoneHref = digits ? `tel:${digits}` : defaultSite.contact.phoneHref;
-  const collection = await contentCollection();
-  await collection.replaceOne({ key: "site" }, { key: "site", body: content }, { upsert: true });
+  const altDigits = content.contact.phoneAltDisplay.replace(/[^\d+]/g, "");
+  content.contact.phoneAltHref = altDigits ? `tel:${altDigits}` : defaultSite.contact.phoneAltHref;
+  const supabase = getSupabase();
+  const { error } = await supabase.from("site_content").upsert({ key: "site", body: content, updated_at: new Date().toISOString() });
+  if (error) throw new Error("The site record could not be saved.");
   return content;
 }

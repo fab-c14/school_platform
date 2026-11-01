@@ -1,28 +1,18 @@
-import { Binary } from "mongodb";
 import { NextResponse } from "next/server";
-import { getDb } from "@/lib/db";
+import { getSupabase, publicObjectUrl, supabaseConfigured } from "@/lib/supabase";
 
 export async function GET(
   _request: Request,
   context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
-  if (!/^[a-f0-9]{24}$/.test(id)) {
+  if (!/^[0-9a-f-]{36}$/i.test(id) || !supabaseConfigured()) {
     return new NextResponse("Not found", { status: 404 });
   }
 
-  const db = await getDb();
-  const doc = await db.collection<{ key: string; contentType: string; data: Binary }>("images").findOne({
-    key: id,
-  });
-  if (!doc) return new NextResponse("Not found", { status: 404 });
+  const supabase = getSupabase();
+  const { data } = await supabase.from("documents").select("bucket,path").eq("id", id).maybeSingle();
+  if (!data?.bucket || !data.path) return new NextResponse("Not found", { status: 404 });
 
-  const bytes = Buffer.isBuffer(doc.data) ? doc.data : Buffer.from(doc.data.buffer);
-
-  return new NextResponse(new Uint8Array(bytes), {
-    headers: {
-      "Content-Type": doc.contentType || "application/octet-stream",
-      "Cache-Control": "public, max-age=31536000, immutable",
-    },
-  });
+  return NextResponse.redirect(publicObjectUrl(String(data.bucket), String(data.path)));
 }

@@ -1,21 +1,34 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import type { SiteContent } from "@/content/site";
+type FormCopy = {
+  note: string;
+  success: string;
+  submit: string;
+  fields: {
+    parent: string;
+    student: string;
+    email: string;
+    phone: string;
+    message: string;
+    className?: string;
+  };
+};
 
-type Errors = Partial<Record<"parent" | "student" | "email" | "phone" | "message", string>>;
+type Errors = Partial<Record<"parent" | "student" | "className" | "email" | "phone" | "message", string>>;
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export function EnquiryForm({ copy }: { copy: SiteContent["form"] }) {
+export function EnquiryForm({ copy }: { copy: FormCopy }) {
   const [errors, setErrors] = useState<Errors>({});
-  const [sent, setSent] = useState(false);
+  const [sent, setSent] = useState("");
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const parent = String(data.get("parent") ?? "").trim();
     const student = String(data.get("student") ?? "").trim();
+    const className = String(data.get("className") ?? "").trim();
     const email = String(data.get("email") ?? "").trim();
     const phone = String(data.get("phone") ?? "").trim();
     const message = String(data.get("message") ?? "").trim();
@@ -23,18 +36,39 @@ export function EnquiryForm({ copy }: { copy: SiteContent["form"] }) {
 
     if (parent.length < 2) next.parent = "Enter the parent or guardian’s name.";
     if (student.length < 2) next.student = "Enter the student’s name.";
+    if (copy.fields.className && className.length < 1) next.className = "Enter the class you are asking about.";
     if (!emailPattern.test(email)) next.email = "Enter a valid email address.";
     if (phone.replace(/\D/g, "").length < 8) next.phone = "Enter a phone number.";
     if (message.length < 10) next.message = "Write at least a short note.";
 
     setErrors(next);
-    setSent(Object.keys(next).length === 0);
+    if (Object.keys(next).length > 0) return;
+
+    const response = await fetch("/api/apply", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        parent,
+        student,
+        className,
+        email,
+        phone,
+        message,
+        kind: copy.fields.className ? "application" : "note",
+      }),
+    });
+    const body = (await response.json().catch(() => null)) as { stored?: boolean; error?: string } | null;
+    if (!response.ok) {
+      setErrors({ message: body?.error || "The office record could not be saved." });
+      return;
+    }
+    setSent(body?.stored ? "Saved for the office. No email was sent. Call the school if you need an answer today." : copy.success);
   }
 
   if (sent) {
     return (
       <p className="border border-line bg-white px-5 py-6 text-base leading-relaxed" role="status">
-        {copy.success}
+        {sent}
       </p>
     );
   }
@@ -56,6 +90,15 @@ export function EnquiryForm({ copy }: { copy: SiteContent["form"] }) {
         error={errors.student}
         autoComplete="off"
       />
+      {copy.fields.className ? (
+        <Field
+          id="className"
+          name="className"
+          label={copy.fields.className}
+          error={errors.className}
+          autoComplete="off"
+        />
+      ) : null}
       <Field
         id="email"
         name="email"

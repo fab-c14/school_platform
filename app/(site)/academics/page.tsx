@@ -12,7 +12,7 @@ export default async function AcademicsPage() {
 
   return (
     <main>
-      <header className="mx-auto max-w-7xl px-5 pb-10 pt-10 md:px-8 md:pt-14">
+      <header className="mx-auto max-w-[1400px] px-5 pb-10 pt-10 md:px-8 md:pt-14">
         <h1 className="max-w-3xl font-serif text-4xl leading-[1.1] tracking-tight md:text-6xl">
           {page.title}
         </h1>
@@ -20,7 +20,7 @@ export default async function AcademicsPage() {
       </header>
 
       <section className="border-t border-line">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 md:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+        <div className="mx-auto grid max-w-[1400px] gap-12 px-5 py-16 md:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
           <ol>
             {page.stages.map((stage) => (
               <li key={stage.index} className="border-t border-line py-8 first:border-t-0 first:pt-0">
@@ -43,7 +43,7 @@ export default async function AcademicsPage() {
       </section>
 
       <section id="week" className="border-t border-line bg-[#e5f6f8]">
-        <div className="mx-auto max-w-7xl px-5 py-16 md:px-8">
+        <div className="mx-auto max-w-[1400px] px-5 py-16 md:px-8">
           <h2 className="font-serif text-3xl tracking-tight md:text-4xl">{page.practiceTitle}</h2>
           <ul className="mt-10 grid gap-10 md:grid-cols-3">
             {page.practices.map((item) => (

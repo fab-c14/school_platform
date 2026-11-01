@@ -1,5 +1,7 @@
 import { Suspense } from "react";
+import { OfficeDesk } from "@/components/admin/documents";
 import { Editor } from "@/components/admin/editor";
+import { listFilesForAdmin, listNotesForAdmin } from "@/lib/records";
 import { readSiteForAdmin } from "@/lib/site-store";
 
 export default function AdminPage() {
@@ -23,6 +25,8 @@ async function EditorLoader() {
       </main>
     );
   }
+  const [files, notes] = await Promise.all([listFilesForAdmin(), listNotesForAdmin()]);
+
   return (
     <main>
       <h1 className="font-serif text-4xl tracking-tight">Edit the site</h1>
@@ -32,6 +36,7 @@ async function EditorLoader() {
       <div className="mt-8">
         <Editor initial={content} />
       </div>
+      <OfficeDesk files={files} notes={notes} />
     </main>
   );
 }

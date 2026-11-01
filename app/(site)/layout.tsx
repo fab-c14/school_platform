@@ -35,6 +35,8 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
         hours={site.contact.hours}
         phoneHref={site.contact.phoneHref}
         phoneDisplay={site.contact.phoneDisplay}
+        phoneAltHref={site.contact.phoneAltHref}
+        phoneAltDisplay={site.contact.phoneAltDisplay}
         email={site.contact.email}
         contactLabel={site.contactLabel}
       />

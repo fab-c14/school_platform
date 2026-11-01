@@ -12,7 +12,7 @@ export default async function AboutPage() {
 
   return (
     <main>
-      <header className="mx-auto max-w-7xl px-5 pb-10 pt-10 md:px-8 md:pt-14">
+      <header className="mx-auto max-w-[1400px] px-5 pb-10 pt-10 md:px-8 md:pt-14">
         <h1 className="max-w-3xl font-serif text-4xl leading-[1.1] tracking-tight md:text-6xl">
           {about.title}
         </h1>
@@ -20,7 +20,7 @@ export default async function AboutPage() {
       </header>
 
       <section className="border-t border-line">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 py-16 md:px-8 lg:grid-cols-2">
+        <div className="mx-auto grid max-w-[1400px] items-center gap-10 px-5 py-16 md:px-8 lg:grid-cols-2">
           <div>
             <h2 className="font-serif text-3xl leading-[1.15] tracking-tight md:text-5xl">
               {about.story.title}
@@ -46,7 +46,7 @@ export default async function AboutPage() {
       </section>
 
       <section className="border-t border-line">
-        <div className="mx-auto max-w-7xl px-5 py-16 md:px-8">
+        <div className="mx-auto max-w-[1400px] px-5 py-16 md:px-8">
           <h2 className="font-serif text-3xl tracking-tight md:text-4xl">{about.valuesTitle}</h2>
           <ol className="mt-8 border-t border-line">
             {about.values.map((value, index) => (
@@ -63,7 +63,7 @@ export default async function AboutPage() {
       </section>
 
       <section id="leadership" className="border-t border-line">
-        <div className="mx-auto max-w-7xl px-5 py-16 md:px-8">
+        <div className="mx-auto max-w-[1400px] px-5 py-16 md:px-8">
           <h2 className="font-serif text-3xl tracking-tight md:text-4xl">{about.leadershipTitle}</h2>
           <p className="mt-4 max-w-[65ch] text-base leading-relaxed text-muted">{about.leadershipNote}</p>
           <ul className="mt-8 grid gap-px bg-line sm:grid-cols-2 lg:max-w-xl">
