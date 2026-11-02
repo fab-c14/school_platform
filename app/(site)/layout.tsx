@@ -38,6 +38,7 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
         phoneAltDisplay={site.contact.phoneAltDisplay}
         email={site.contact.email}
         contactLabel={site.contactLabel}
+        nav={site.nav.map((item) => ({ href: item.href, label: item.label }))}
       />
     </div>
   );

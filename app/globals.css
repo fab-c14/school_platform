@@ -27,178 +27,52 @@ body {
 }
 
 ::selection {
-  background: #e85d3f;
-  color: #f5f7f9;
+  background: var(--accent);
+  color: var(--paper);
 }
 
 .font-serif {
   font-family: var(--font-geist), sans-serif;
 }
 
-.blob {
-  position: absolute;
-  border-radius: 60% 40% 55% 45% / 48% 62% 38% 52%;
-  background: radial-gradient(circle at 32% 30%, rgb(255 215 180 / 0.95), rgb(232 93 63 / 0.32) 46%, transparent 72%);
-  filter: blur(8px);
-  transform: translate3d(0, 0, 0);
-  animation: blob-drift 22s ease-in-out infinite;
+.hero-cut-main {
+  clip-path: polygon(0 0, 100% 3%, 94% 100%, 0 100%);
 }
 
-.blob-a {
-  width: 28rem;
-  height: 28rem;
-  top: -6rem;
-  left: -8rem;
+.hero-cut-side {
+  clip-path: polygon(7% 0, 100% 0, 100% 92%, 0 100%);
 }
 
-.blob-b {
-  width: 34rem;
-  height: 30rem;
-  right: -10rem;
-  bottom: -8rem;
-  animation-delay: -8s;
-  border-radius: 46% 54% 62% 38% / 42% 48% 52% 58%;
+.hero-cut-foot {
+  clip-path: polygon(5% 0, 100% 7%, 100% 100%, 0 100%);
 }
 
-.blob-c {
-  width: 16rem;
-  height: 16rem;
-  top: 18%;
-  right: 28%;
-  animation-delay: -14s;
-  opacity: 0.7;
+.breeze-cut-story {
+  clip-path: polygon(0 0, 100% 4%, 92% 100%, 0 100%);
 }
 
-.photo-blob {
-  position: absolute;
-  z-index: 0;
-  width: 10rem;
-  height: 10rem;
-  border-radius: 58% 42% 52% 48% / 44% 56% 45% 55%;
-  filter: blur(1px);
-  opacity: 0.85;
-  transform: rotate(12deg);
-  transition: transform 700ms ease, opacity 700ms ease;
+.breeze-cut-small {
+  clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 92%);
 }
 
-.group:hover .photo-blob {
-  opacity: 1;
-  transform: rotate(20deg) scale(1.08);
+.breeze-cut-cta {
+  clip-path: polygon(0 8%, 100% 0, 100% 100%, 0 100%);
 }
 
-.photo-blob-coral {
-  background: #f29a7f;
+.breeze-band-a {
+  clip-path: polygon(0 8%, 100% 0, 94% 100%, 0 94%);
 }
 
-.photo-blob-peach {
-  background: #f4c6a9;
+.breeze-band-b {
+  clip-path: polygon(6% 0, 100% 4%, 100% 100%, 0 88%);
 }
 
-@keyframes blob-drift {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    transform: translate3d(1.5rem, -1.25rem, 0) scale(1.06);
-  }
+.breeze-band-c {
+  clip-path: polygon(0 0, 94% 7%, 100% 100%, 8% 92%);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .blob {
-    animation: none;
-  }
-}
-
-.breeze {
-  position: absolute;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.breeze-1 {
-  top: 6%;
-  right: -18%;
-  width: min(42rem, 70%);
-  height: 72%;
-  background: #f6d7cb;
-  clip-path: polygon(18% 8%, 46% 0, 74% 16%, 100% 6%, 88% 42%, 100% 78%, 70% 100%, 36% 82%, 0 94%, 10% 48%);
-}
-
-.breeze-2 {
-  top: 10%;
-  left: -16%;
-  width: min(36rem, 62%);
-  height: 64%;
-  background: #f8e6dc;
-  clip-path: polygon(0 22%, 28% 4%, 58% 18%, 86% 0, 100% 36%, 78% 62%, 100% 100%, 48% 78%, 12% 96%, 0 60%);
-}
-
-.breeze-3 {
-  right: -8%;
-  bottom: -6%;
-  width: min(34rem, 58%);
-  height: 58%;
-  background: #f3cbbd;
-  clip-path: polygon(14% 0, 52% 12%, 100% 0, 86% 38%, 100% 72%, 62% 100%, 24% 78%, 0 100%, 8% 46%);
-}
-
-.breeze-4 {
-  top: -4%;
-  left: 8%;
-  width: min(48rem, 80%);
-  height: 46%;
-  background: #f7ddd2;
-  clip-path: polygon(0 40%, 16% 8%, 38% 28%, 62% 0, 84% 22%, 100% 8%, 100% 70%, 72% 100%, 40% 74%, 0 100%);
-}
-
-.cover-blob {
-  position: absolute;
-  z-index: 2;
-  pointer-events: none;
-  background: var(--paper);
-}
-
-.cover-sky-l {
-  top: -14%;
-  left: -12%;
-  width: 52%;
-  height: 36%;
-  border-radius: 58% 42% 46% 54% / 62% 48% 52% 38%;
-}
-
-.cover-sky-r {
-  top: -12%;
-  right: -10%;
-  width: 46%;
-  height: 32%;
-  border-radius: 42% 58% 48% 52% / 46% 62% 38% 54%;
-  background: #f6d2c4;
-}
-
-.cover-edge-l {
-  top: 34%;
-  left: -12%;
-  width: 18%;
-  height: 38%;
-  border-radius: 60% 40% 55% 45% / 42% 58% 42% 58%;
-}
-
-.cover-edge-r {
-  right: -8%;
-  bottom: 6%;
-  width: 20%;
-  height: 34%;
-  border-radius: 48% 52% 42% 58% / 55% 40% 60% 45%;
-  background: #f4c6a9;
-}
-
-.cover-grass {
-  bottom: -10%;
-  left: 22%;
-  width: 56%;
-  height: 16%;
-  border-radius: 50%;
+.breeze-band-d {
+  clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%);
 }
 
 .no-scrollbar {

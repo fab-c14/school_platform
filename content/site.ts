@@ -60,9 +60,19 @@ export const defaultSite = {
     primaryCta: { href: "/apply", label: "Apply" },
     secondaryCta: { href: "/about", label: "About the school" },
     heroImage: {
-      src: "/images/life/garden.jpg",
-      alt: "Students and teachers of Welkin International School gathered outdoors, with mountains behind them",
+      src: "/images/generated/hero-campus.jpg",
+      alt: "A quiet school courtyard in the mountains of Lolab",
     },
+    heroGallery: [
+      {
+        src: "/images/generated/classroom.jpg",
+        alt: "A sunlit classroom with wooden desks and books",
+      },
+      {
+        src: "/images/generated/books.jpg",
+        alt: "Open books and a Qur'an on a wooden desk",
+      },
+    ],
     intro: {
       title: "Modern learning and Islamic values.",
       body: "The Chairman, Iftekhar Ul Akbar, describes the school as a trust: intellect, character, and faith taught together, for the children of North Lolab.",

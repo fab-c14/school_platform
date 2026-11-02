@@ -9,7 +9,6 @@ import {
   UsersThreeIcon,
 } from "@phosphor-icons/react/dist/ssr";
 import { AdmissionsForm } from "@/components/admissions-form";
-import { AuroraWash } from "@/components/aurora-wash";
 import { Faq } from "@/components/faq";
 import { Photo } from "@/components/photo";
 import { pageMetadata } from "@/lib/metadata";
@@ -104,7 +103,6 @@ export default async function ApplyPage() {
       />
 
       <section className="relative overflow-hidden bg-paper">
-        <AuroraWash quiet />
         <div className="relative z-10 mx-auto grid max-w-[1400px] items-center gap-10 px-5 py-12 md:px-8 lg:grid-cols-[1.02fr_0.98fr] lg:gap-14 lg:py-16">
           <div>
             <p className="text-sm text-accent">Admissions</p>
@@ -131,7 +129,7 @@ export default async function ApplyPage() {
               </a>
             </div>
           </div>
-          <div className="relative min-h-[20rem] overflow-hidden bg-line lg:min-h-[32rem]">
+          <div className="breeze-cut-story relative min-h-[20rem] overflow-hidden bg-line lg:min-h-[32rem]">
             <Photo
               src="/images/life/blue-building.jpg"
               alt="Students of Welkin International School outside the school building"
@@ -140,6 +138,7 @@ export default async function ApplyPage() {
               sizes="(min-width: 1024px) 48vw, 100vw"
               className="object-cover object-[center_42%]"
             />
+            <span className="absolute inset-0 bg-gradient-to-t from-deep/20 via-transparent to-transparent" aria-hidden />
           </div>
         </div>
       </section>
