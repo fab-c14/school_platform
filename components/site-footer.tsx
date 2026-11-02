@@ -31,7 +31,7 @@ export function SiteFooter({
           <div className="flex items-center gap-3">
             <span className="relative grid size-12 place-items-center">
               <span className="absolute -inset-1 rounded-full bg-paper/20 blur-sm" aria-hidden />
-              <Image src="/brand/logo.jpg" alt="" width={48} height={48} className="relative size-12 rounded-full object-cover" />
+              <Image src="/brand/logo.jpg" alt="" width={48} height={48} unoptimized className="relative size-12 rounded-full object-cover" />
             </span>
             <p className="font-serif text-xl">{name}</p>
           </div>

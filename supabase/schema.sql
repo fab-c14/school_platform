@@ -27,8 +27,16 @@ create table if not exists public.applications (
   email text not null,
   phone text not null,
   message text not null,
+  details jsonb not null default '{}'::jsonb,
+  documents jsonb not null default '[]'::jsonb,
+  status text not null default 'new',
   created_at timestamptz not null default now()
 );
+
+-- Older projects created the table before the admissions form existed.
+alter table public.applications add column if not exists details jsonb not null default '{}'::jsonb;
+alter table public.applications add column if not exists documents jsonb not null default '[]'::jsonb;
+alter table public.applications add column if not exists status text not null default 'new';
 
 alter table public.site_content enable row level security;
 alter table public.documents enable row level security;
@@ -43,5 +51,11 @@ grant select, insert, update, delete on table public.documents to service_role;
 grant select, insert, update, delete on table public.applications to service_role;
 
 insert into storage.buckets (id, name, public)
-values ('media', 'media', true), ('documents', 'documents', true)
+values
+  ('media', 'media', true),
+  ('documents', 'documents', true),
+  ('admissions', 'admissions', false)
 on conflict (id) do nothing;
+
+-- Admission papers must never be public, even if the bucket already existed.
+update storage.buckets set public = false where id = 'admissions';

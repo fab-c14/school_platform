@@ -12,19 +12,19 @@ type NavItem = NavLink & { children?: NavLink[] };
 export function SiteHeader({
   name,
   nav,
-  contactLabel,
   phoneDisplay,
   phoneHref,
 }: {
   name: string;
   nav: NavItem[];
-  contactLabel: string;
   phoneDisplay: string;
   phoneHref: string;
 }) {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
+  const [openPath, setOpenPath] = useState<string | null>(null);
   const [section, setSection] = useState<string | null>(null);
+  const open = openPath === pathname;
+
   const isActive = (href: string) => {
     const baseHref = href.split("#")[0];
     return baseHref === "/" ? pathname === "/" : pathname === baseHref || pathname.startsWith(`${baseHref}/`);
@@ -36,7 +36,7 @@ export function SiteHeader({
         <Link
           href="/"
           className="group flex shrink-0 items-center gap-3 text-ink"
-          onClick={() => setOpen(false)}
+          onClick={() => setOpenPath(null)}
         >
           <span className="relative grid size-11 place-items-center overflow-hidden rounded-full border border-line bg-paper transition group-hover:border-accent">
             <Image
@@ -45,6 +45,7 @@ export function SiteHeader({
               width={52}
               height={52}
               className="size-11 object-cover transition duration-500 group-hover:scale-105"
+              unoptimized
               priority
             />
           </span>
@@ -53,8 +54,8 @@ export function SiteHeader({
           </span>
         </Link>
 
-        <nav className="hidden min-w-0 flex-1 lg:block" aria-label="Primary">
-          <ul className="ml-auto flex items-center justify-end gap-1 overflow-x-auto whitespace-nowrap px-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <nav className="hidden min-w-0 flex-1 min-[1120px]:block" aria-label="Primary">
+          <ul className="ml-auto flex items-center justify-end gap-0.5 whitespace-nowrap px-2">
             {nav.map((item) => (
               <li key={item.label} className="group relative shrink-0">
                 <Link
@@ -101,28 +102,28 @@ export function SiteHeader({
           </ul>
         </nav>
 
-        <div className="ml-auto hidden items-center gap-2 lg:flex">
+        <div className="ml-auto flex items-center gap-2">
           <a
             href={phoneHref}
-            className="inline-flex size-10 items-center justify-center rounded-full border border-line text-ink transition hover:border-accent hover:text-accent"
+            className="hidden size-10 items-center justify-center rounded-full border border-line text-ink transition hover:border-accent hover:text-accent min-[1120px]:inline-flex"
             aria-label={`Call ${phoneDisplay}`}
           >
             <PhoneIcon size={17} weight="bold" />
           </a>
           <Link
-            href="/contact"
+            href="/apply"
             className="inline-flex min-h-10 items-center gap-2 rounded-full bg-ink px-4 text-sm font-medium text-paper transition hover:-translate-y-0.5 hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent active:scale-[0.98]"
           >
-            {contactLabel}
+            Apply
             <ArrowUpRightIcon size={15} weight="bold" />
           </Link>
         </div>
         <button
           type="button"
-          className="ml-auto inline-flex size-11 items-center justify-center rounded-full border border-line text-ink transition hover:border-accent hover:text-accent lg:hidden"
+          className="inline-flex size-11 items-center justify-center rounded-full border border-line text-ink transition hover:border-accent hover:text-accent min-[1120px]:hidden"
           aria-expanded={open}
           aria-controls="mobile-nav"
-          onClick={() => setOpen((value) => !value)}
+          onClick={() => setOpenPath(open ? null : pathname)}
         >
           <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
           {open ? <XIcon size={22} /> : <ListIcon size={22} />}
@@ -130,9 +131,9 @@ export function SiteHeader({
       </div>
 
       {open ? (
-        <nav id="mobile-nav" className="max-h-[70dvh] overflow-y-auto border-t border-line bg-paper lg:hidden" aria-label="Mobile">
+        <nav id="mobile-nav" className="max-h-[70dvh] overflow-y-auto border-t border-line bg-paper min-[1120px]:hidden" aria-label="Mobile">
           <ul>
-            {[...nav, { href: "/contact", label: contactLabel }].map((item) => {
+            {nav.map((item) => {
               const expanded = section === item.label;
               return (
                 <li key={item.label} className="border-b border-line">
@@ -142,7 +143,7 @@ export function SiteHeader({
                       className={`block flex-1 px-5 py-3 text-base ${
                         isActive(item.href) ? "font-medium text-accent" : "text-ink"
                       }`}
-                      onClick={() => setOpen(false)}
+                      onClick={() => setOpenPath(null)}
                     >
                       {item.label}
                     </Link>
@@ -165,7 +166,7 @@ export function SiteHeader({
                           <Link
                             href={child.href}
                             className="block px-8 py-2 text-sm text-ink"
-                            onClick={() => setOpen(false)}
+                            onClick={() => setOpenPath(null)}
                           >
                             {child.label}
                           </Link>
@@ -177,7 +178,7 @@ export function SiteHeader({
               );
             })}
           </ul>
-          <a href={phoneHref} className="block px-5 py-4 text-sm text-ink">
+          <a href={phoneHref} onClick={() => setOpenPath(null)} className="block px-5 py-4 text-sm text-ink">
             {phoneDisplay}
           </a>
         </nav>

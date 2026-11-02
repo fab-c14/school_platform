@@ -17,7 +17,6 @@
     "next": "16.4.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "react-medium-image-zoom": "^5.4.9",
     "swiper": "^14.4.0"
   },
   "devDependencies": {

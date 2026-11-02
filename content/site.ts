@@ -38,42 +38,16 @@ export const defaultSite = {
       ],
     },
     {
-      href: "/downloads",
-      label: "Downloads",
-      children: [{ href: "/downloads", label: "Notices and lists" }],
-    },
-    {
       href: "/admissions",
       label: "Admissions",
       children: [
+        { href: "/apply", label: "Apply" },
         { href: "/admissions", label: "How to apply" },
-        { href: "/register", label: "Online registration" },
       ],
     },
-    {
-      href: "/campus",
-      label: "Facilities",
-      children: [
-        { href: "/campus", label: "Campus" },
-        { href: "/campus#places", label: "Labs, library, and sport" },
-      ],
-    },
-    { href: "/alumni", label: "Alumni" },
-    { href: "/register", label: "Online Registration" },
-    { href: "/careers", label: "Careers" },
-    {
-      href: "/gallery",
-      label: "Gallery",
-      children: [{ href: "/gallery", label: "Photographs" }],
-    },
-    {
-      href: "/students",
-      label: "Student Corner",
-      children: [
-        { href: "/news", label: "News" },
-        { href: "/students", label: "Student life" },
-      ],
-    },
+    { href: "/campus", label: "Facilities" },
+    { href: "/gallery", label: "Gallery" },
+    { href: "/contact", label: "Contact Us" },
   ],
   contactLabel: "Contact Us",
   home: {
@@ -83,8 +57,8 @@ export const defaultSite = {
     eyebrow: "Sevar Thandipora, Lolab",
     headline: ["Excel with", "purpose."],
     lede: "A school in Sevar Thandipora, Lolab, joining modern learning with faith. Call 7006384265.",
-    primaryCta: { href: "/admissions", label: "Admissions" },
-    secondaryCta: { href: "/about", label: "Chairman" },
+    primaryCta: { href: "/apply", label: "Apply" },
+    secondaryCta: { href: "/about", label: "About the school" },
     heroImage: {
       src: "/images/life/garden.jpg",
       alt: "Students and teachers of Welkin International School gathered outdoors, with mountains behind them",
@@ -323,10 +297,10 @@ export const defaultSite = {
     lede: "The office is at Sevar Thandipora, Lolab. Call 7006384265 or 9906720949 on school days.",
   },
   apply: {
-    title: "Apply",
-    note: "The office keeps this application. Email is not sent yet. Call 7006384265 if you need an answer today.",
+    title: "Join the Welkin family.",
+    note: "Admissions are open. Fill in the form below and the office will call you to talk through the next step.",
     success:
-      "The application looks complete. Nothing was sent. Call 7006384265 or 9906720949 and the office will take it from here.",
+      "The office has the application. Keep 7006384265 saved and call if you need to add anything.",
     fields: {
       parent: "Parent or guardian",
       student: "Student",
@@ -335,7 +309,7 @@ export const defaultSite = {
       phone: "Phone",
       message: "Anything the office should know",
     },
-    submit: "Check application",
+    submit: "Submit application",
   },
   form: {
     title: "Write to the office",

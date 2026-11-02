@@ -21,7 +21,6 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
           label: item.label,
           children: "children" in item ? item.children : undefined,
         }))}
-        contactLabel={site.contactLabel}
         phoneDisplay={site.contact.phoneDisplay}
         phoneHref={site.contact.phoneHref}
       />

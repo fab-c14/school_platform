@@ -67,10 +67,58 @@ export function OfficeDesk({ files, notes }: { files: StoredFile[]; notes: Store
               {note.parentName} · {note.phone}
             </p>
             <p className="mt-2 leading-relaxed">{note.message}</p>
+            <ApplicationDetails note={note} />
           </li>
         ))}
         {notes.length === 0 ? <li className="text-sm text-muted">No notes yet.</li> : null}
       </ul>
     </section>
+  );
+}
+
+function ApplicationDetails({ note }: { note: StoredNote }) {
+  const value = (key: string) => {
+    const item = note.details[key];
+    return typeof item === "string" ? item : "";
+  };
+  const rows = [
+    ["Grade", value("grade")],
+    ["Date of birth", value("dob")],
+    ["Father", value("fatherName")],
+    ["Mother", value("motherName")],
+    ["Address", value("currentAddress")],
+  ].filter(([, text]) => text);
+
+  if (note.kind !== "application" || (rows.length === 0 && note.documents.length === 0)) return null;
+
+  return (
+    <div className="mt-3 border-t border-line pt-3">
+      {rows.length ? (
+        <dl className="grid gap-x-6 gap-y-1 text-xs text-muted sm:grid-cols-2">
+          {rows.map(([label, text]) => (
+            <div key={label} className="flex gap-1">
+              <dt className="shrink-0 font-medium text-ink">{label}:</dt>
+              <dd>{text}</dd>
+            </div>
+          ))}
+        </dl>
+      ) : null}
+      {note.documents.length ? (
+        <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-xs">
+          {note.documents.map((document) => (
+            <li key={`${document.label}-${document.name}`}>
+              <a
+                className="underline decoration-accent underline-offset-4 hover:text-accent"
+                href={document.url}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {document.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+    </div>
   );
 }

@@ -30,19 +30,21 @@ export default async function AcademicsPage() {
               </li>
             ))}
           </ol>
-          <div className="relative aspect-[4/3] overflow-hidden bg-line lg:sticky lg:top-24">
-            <Photo
-              src={page.image.src}
-              alt={page.image.alt}
-              fill
-              sizes="(min-width: 1024px) 40vw, 100vw"
-              className="object-cover"
-            />
+          <div className="lg:sticky lg:top-24">
+            <div className="relative aspect-[4/3] overflow-hidden bg-line">
+              <Photo
+                src={page.image.src}
+                alt={page.image.alt}
+                fill
+                sizes="(min-width: 1024px) 40vw, 100vw"
+                className="object-cover"
+              />
+            </div>
           </div>
         </div>
       </section>
 
-      <section id="week" className="border-t border-line bg-[#e5f6f8]">
+      <section id="week" className="border-t border-line bg-[#f6ebe4]">
         <div className="mx-auto max-w-[1400px] px-5 py-16 md:px-8">
           <h2 className="font-serif text-3xl tracking-tight md:text-4xl">{page.practiceTitle}</h2>
           <ul className="mt-10 grid gap-10 md:grid-cols-3">

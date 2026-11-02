@@ -8,6 +8,7 @@ type OfficeNote = {
   message: string;
 };
 
-export async function notifyOffice(_note: OfficeNote) {
+export async function notifyOffice(note: OfficeNote) {
+  void note;
   return { sent: false as const };
 }

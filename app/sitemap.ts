@@ -8,7 +8,7 @@ const paths = [
   "/academics",
   "/downloads",
   "/admissions",
-  "/register",
+  "/apply",
   "/campus",
   "/alumni",
   "/careers",

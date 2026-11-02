@@ -5,7 +5,7 @@
   --ink: #1d2b38;
   --muted: #5f6d79;
   --line: #d7dfe6;
-  --accent: #e85d3f;
+  --accent: #c4472b;
   --deep: #21384a;
 }
 
@@ -199,13 +199,6 @@ body {
   width: 56%;
   height: 16%;
   border-radius: 50%;
-}
-
-.photo-frame [data-rmiz],
-.photo-frame [data-rmiz-content] {
-  display: block;
-  height: 100%;
-  width: 100%;
 }
 
 .no-scrollbar {

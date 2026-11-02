@@ -5,9 +5,7 @@ import { SchoolJsonLd } from "@/components/json-ld";
 import { AuroraWash } from "@/components/aurora-wash";
 import { BreezeCut } from "@/components/breeze-cut";
 import { HomeGalleryCarousel } from "@/components/home-gallery-carousel";
-import { FramedPhoto } from "@/components/framed-photo";
 import { Photo } from "@/components/photo";
-import { Reveal } from "@/components/reveal";
 import { HomeKinetics } from "@/components/home-kinetics";
 import { formatNewsDate } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
@@ -77,13 +75,14 @@ export default async function HomePage() {
               </a>
             </div>
           </div>
-          <div data-hero-reveal data-kinetic-image className="relative min-h-[22rem] overflow-hidden bg-line lg:min-h-[36rem]">
-            <FramedPhoto
+          <div data-hero-reveal className="relative min-h-[22rem] overflow-hidden bg-line lg:min-h-[36rem]">
+            <Photo
               src={home.heroImage.src}
               alt={home.heroImage.alt}
+              fill
               priority
               sizes="(min-width: 1024px) 56vw, 100vw"
-              className="object-cover object-[center_58%]"
+              className="object-cover object-[center_62%]"
             />
           </div>
         </div>
@@ -92,9 +91,9 @@ export default async function HomePage() {
       <section className="relative overflow-hidden bg-[#f6ebe4]">
         <BreezeCut tone="mist" variant={0} />
         <AuroraWash quiet />
-        <dl className="relative z-10 mx-auto grid max-w-[1400px] sm:grid-cols-3">
+        <dl className="relative z-10 mx-auto grid max-w-[1400px] md:grid-cols-3">
           {home.facts.map((fact) => (
-            <div key={fact.label} className="border-b border-line px-5 py-8 sm:border-b-0 sm:border-r sm:px-8 sm:last:border-r-0">
+            <div key={fact.label} className="border-b border-line px-5 py-8 last:border-b-0 md:border-b-0 md:border-r md:px-8 md:last:border-r-0">
               <dt className="font-serif text-3xl tracking-tight text-ink md:text-4xl">{fact.value}</dt>
               <dd className="mt-2 max-w-[24ch] text-sm leading-relaxed text-muted">{fact.label}</dd>
             </div>
@@ -106,10 +105,8 @@ export default async function HomePage() {
         <BreezeCut tone="paper" variant={1} />
         <AuroraWash quiet />
         <div className="relative z-10 mx-auto max-w-[1400px] px-5 py-16 md:px-8 md:py-24">
-          <Reveal>
-            <h2 className="max-w-3xl font-serif text-4xl leading-[1.05] tracking-tight md:text-6xl">{home.intro.title}</h2>
-            <p className="mt-5 max-w-[62ch] text-base leading-relaxed text-muted md:text-lg">{home.intro.body}</p>
-          </Reveal>
+          <h2 className="max-w-3xl font-serif text-4xl leading-[1.05] tracking-tight md:text-6xl">{home.intro.title}</h2>
+          <p className="mt-5 max-w-[62ch] text-base leading-relaxed text-muted md:text-lg">{home.intro.body}</p>
           <div className="mt-10 grid gap-4 md:grid-cols-2">
             {home.paths.map((path, index) => (
               <Link
@@ -124,7 +121,7 @@ export default async function HomePage() {
                   alt={path.alt}
                   fill
                   sizes="(min-width: 768px) 50vw, 100vw"
-                  className="object-cover"
+                  className="object-cover object-[center_40%]"
                 />
                 <span className="absolute inset-0 bg-gradient-to-t from-deep/90 via-deep/20 to-transparent" />
                 <span className="relative">
@@ -142,9 +139,10 @@ export default async function HomePage() {
         <AuroraWash quiet />
         <div className="relative z-10 mx-auto grid max-w-[1400px] items-center gap-10 px-5 py-16 md:px-8 md:py-24 lg:grid-cols-[0.8fr_1.2fr]">
           <div className="relative aspect-[3/4] overflow-hidden bg-line">
-            <FramedPhoto
+            <Photo
               src={site.about.story.image.src}
               alt={site.about.story.image.alt}
+              fill
               sizes="(min-width: 1024px) 32rem, 100vw"
               className="object-cover object-top"
             />
@@ -152,6 +150,9 @@ export default async function HomePage() {
           <div>
             <h2 className="font-serif text-4xl tracking-tight md:text-5xl">{site.about.story.title}</h2>
             <p className="mt-6 max-w-[62ch] text-base leading-relaxed text-muted md:text-lg">
+              {site.about.story.paragraphs[5]}
+            </p>
+            <p className="mt-4 max-w-[62ch] text-base leading-relaxed text-muted md:text-lg">
               {site.about.story.paragraphs[6]}
             </p>
             <p className="mt-6 font-serif text-2xl text-ink">{site.about.leaders[0]?.name}</p>
@@ -184,24 +185,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-paper">
-        <BreezeCut tone="paper" variant={2} />
-        <AuroraWash quiet />
-        <div className="relative z-10 mx-auto max-w-[1400px] px-5 py-16 md:px-8 md:py-24">
-          <h2 className="font-serif text-4xl tracking-tight md:text-5xl">Testimonials</h2>
-          <p className="mt-4 max-w-[52ch] text-base leading-relaxed text-muted">{site.about.story.title}</p>
-          <ul className="mt-10 grid gap-4 lg:grid-cols-3">
-            {[site.about.story.paragraphs[6], site.about.story.paragraphs[3], site.about.story.paragraphs[5]].map((quote) => (
-              <li key={quote} className="flex flex-col border border-line bg-paper/80 p-6">
-                <p className="font-serif text-xl leading-snug text-ink">{quote}</p>
-                <p className="mt-6 text-sm text-ink">{site.about.leaders[0]?.name}</p>
-                <p className="text-sm text-muted">{site.about.leaders[0]?.role}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
       <section className="relative bg-[#f6ebe4]">
         <BreezeCut tone="mist" variant={0} />
         <span className="breeze breeze-2" aria-hidden />
@@ -222,8 +205,7 @@ export default async function HomePage() {
 
       <section className="relative bg-paper">
         <BreezeCut tone="paper" variant={1} />
-        <span className="breeze breeze-1" aria-hidden />
-        <div className="relative z-10 mx-auto max-w-[1400px] px-5 py-16 md:px-8">
+        <div className="relative z-10 mx-auto max-w-[1400px] px-5 pb-24 pt-16 md:px-8 md:pb-32 md:pt-24">
           <h2 className="font-serif text-4xl tracking-tight md:text-5xl">{home.newsTitle}</h2>
           <ul className="mt-8 divide-y divide-line border-y border-line">
             {site.news.items.map((item) => (

@@ -62,6 +62,7 @@ export function ImageField({
     <div className="grid gap-3 border border-line bg-paper p-3">
       <p className="text-sm text-ink">{label}</p>
       {/* Admin preview of a file the editor just chose. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={src} alt="" className="h-36 w-full object-cover" />
       <TextField label="Description of the photo" value={alt} onChange={(next) => onChange({ src, alt: next })} />
       <label className="text-sm text-muted">
