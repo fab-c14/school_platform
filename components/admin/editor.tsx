@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { SiteContent } from "@/content/site";
-import { ImageField, TextField } from "@/components/admin/fields";
+import { BooleanField, ImageField, TextField } from "@/components/admin/fields";
 
 const sections = ["School", "Home", "About", "Academics", "Admissions", "Campus", "News", "Office"] as const;
 type Section = (typeof sections)[number];
@@ -487,6 +487,15 @@ function NewsForm({ draft, patch }: { draft: SiteContent; patch: (next: Partial<
             }}
             rows={4}
           />
+          <BooleanField
+            label="Show animated 'NEW ★' badge"
+            hint="Displays pulsing badge in marquee & circulars"
+            value={item.isNew ?? false}
+            onChange={(isNew) => {
+              const items = page.items.map((row, rowIndex) => (rowIndex === index ? { ...row, isNew } : row));
+              setPage({ items });
+            }}
+          />
           <button
             type="button"
             className="w-fit text-sm text-accent"
@@ -503,7 +512,7 @@ function NewsForm({ draft, patch }: { draft: SiteContent; patch: (next: Partial<
           setPage({
             items: [
               ...page.items,
-              { date: new Date().toISOString().slice(0, 10), title: "New story", body: "Write the story here." },
+              { date: new Date().toISOString().slice(0, 10), title: "New story", body: "Write the story here.", isNew: true },
             ],
           })
         }

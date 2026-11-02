@@ -1,15 +1,19 @@
 import { BellRingingIcon } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
+import { NewBadge } from "@/components/new-badge";
 
-type Notice = {
+export type Notice = {
   date: string;
   title: string;
+  isNew?: boolean;
 };
 
 export function NotificationMarquee({ notices }: { notices: Notice[] }) {
-  const items = [
-    { date: "", title: "Admissions are open. Call 7006384265 for details." },
-    ...(notices.length ? notices : [{ date: "", title: "New school information will appear here." }]),
+  const items: Notice[] = [
+    { date: "", title: "Admissions Open for Session 2026-27 (Nursery to Grade 10)", isNew: true },
+    ...(notices.length
+      ? notices.map((n, i) => ({ ...n, isNew: n.isNew ?? i < 2 }))
+      : [{ date: "", title: "New school information will appear here.", isNew: false }]),
   ];
   const repeated = [...items, ...items];
 
@@ -32,17 +36,25 @@ export function NotificationMarquee({ notices }: { notices: Notice[] }) {
               <Link
                 key={`${notice.title}-${index}`}
                 href="/news"
-                className="mr-10 inline-flex items-center gap-3 whitespace-nowrap text-sm text-ink/75 transition hover:text-ink"
+                className="mr-10 inline-flex items-center gap-2.5 whitespace-nowrap text-sm text-ink/85 transition hover:text-ink"
               >
-                {notice.date ? <time dateTime={notice.date}>{notice.date}</time> : null}
+                {notice.date ? (
+                  <time dateTime={notice.date} className="text-xs text-muted font-mono">
+                    {notice.date}
+                  </time>
+                ) : null}
                 <span className="text-accent">•</span>
-                <span>{notice.title}</span>
+                <span className="font-medium">{notice.title}</span>
+                {notice.isNew ? <NewBadge className="ml-1" /> : null}
               </Link>
             ))}
           </div>
         </div>
 
-        <Link href="/news" className="hidden shrink-0 text-sm font-medium text-accent sm:block">
+        <Link
+          href="/news"
+          className="hidden shrink-0 text-sm font-medium text-accent hover:underline sm:block"
+        >
           View all
         </Link>
       </div>

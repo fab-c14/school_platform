@@ -9,6 +9,7 @@ import {
   UsersThreeIcon,
 } from "@phosphor-icons/react/dist/ssr";
 import { AdmissionsForm } from "@/components/admissions-form";
+import { BreezeCut } from "@/components/breeze-cut";
 import { Faq } from "@/components/faq";
 import { Photo } from "@/components/photo";
 import { pageMetadata } from "@/lib/metadata";
@@ -102,7 +103,7 @@ export default async function ApplyPage() {
         }}
       />
 
-      <section className="breeze-wave relative overflow-hidden bg-paper">
+      <section className="relative overflow-hidden bg-paper">
         <div className="relative z-10 mx-auto grid max-w-[1400px] items-center gap-10 px-5 py-12 md:px-8 lg:grid-cols-[1.02fr_0.98fr] lg:gap-14 lg:py-16">
           <div>
             <p className="text-sm text-accent">Admissions</p>
@@ -143,8 +144,9 @@ export default async function ApplyPage() {
         </div>
       </section>
 
-      <section className="breeze-wave border-y border-line bg-[#f6ebe4]">
-        <dl className="mx-auto grid max-w-[1400px] md:grid-cols-3">
+      <section className="relative overflow-hidden bg-[#f6ebe4]">
+        <BreezeCut from="paper" to="mist" variant="wave-flow" />
+        <dl className="mx-auto grid max-w-[1400px] px-5 py-6 md:grid-cols-3 md:px-8">
           <div className="border-b border-line px-5 py-6 md:border-b-0 md:border-r md:px-8">
             <dt className="text-sm font-medium text-ink">Sevar Thandipora</dt>
             <dd className="mt-1 text-sm leading-relaxed text-muted">The school office is in Lolab.</dd>
@@ -165,8 +167,9 @@ export default async function ApplyPage() {
         </dl>
       </section>
 
-      <section className="breeze-wave bg-paper">
-        <div className="mx-auto max-w-[1400px] px-5 py-16 md:px-8 md:py-20">
+      <section className="relative overflow-hidden bg-paper">
+        <BreezeCut from="mist" to="paper" variant="slant-right" />
+        <div className="mx-auto max-w-[1400px] px-5 py-14 md:px-8 md:py-18">
           <div className="max-w-[58ch]">
             <h2 className="font-serif text-4xl leading-[1.06] tracking-tight md:text-5xl">Why families choose Welkin</h2>
             <p className="mt-4 text-base leading-relaxed text-muted">
@@ -192,8 +195,9 @@ export default async function ApplyPage() {
         </div>
       </section>
 
-      <section id="application" className="breeze-wave scroll-mt-20 border-t border-line bg-[#f6ebe4]">
-        <div className="mx-auto max-w-[1100px] px-5 py-16 md:px-8 md:py-20">
+      <section id="application" className="relative scroll-mt-20 overflow-hidden bg-[#f6ebe4]">
+        <BreezeCut from="paper" to="mist" variant="wave-crest" />
+        <div className="mx-auto max-w-[1100px] px-5 py-14 md:px-8 md:py-18">
           <div className="max-w-[62ch]">
             <h2 className="font-serif text-4xl leading-[1.06] tracking-tight md:text-5xl">Start your application</h2>
             <p className="mt-4 text-base leading-relaxed text-muted">
@@ -210,8 +214,9 @@ export default async function ApplyPage() {
         </div>
       </section>
 
-      <section id="questions" className="breeze-wave scroll-mt-20 bg-paper">
-        <div className="mx-auto max-w-[1400px] px-5 py-16 md:px-8 md:py-20">
+      <section id="questions" className="relative scroll-mt-20 overflow-hidden bg-paper">
+        <BreezeCut from="mist" to="paper" variant="wave-gentle" />
+        <div className="mx-auto max-w-[1400px] px-5 py-14 md:px-8 md:py-18">
           <div className="max-w-[58ch]">
             <h2 className="font-serif text-4xl leading-[1.06] tracking-tight md:text-5xl">Questions families ask</h2>
             <p className="mt-4 text-base leading-relaxed text-muted">
@@ -224,7 +229,8 @@ export default async function ApplyPage() {
         </div>
       </section>
 
-      <section className="bg-deep text-paper">
+      <section className="relative overflow-hidden bg-deep text-paper">
+        <BreezeCut from="paper" to="deep" variant="wave-flow" />
         <div className="mx-auto flex max-w-[1400px] flex-col gap-6 px-5 py-14 md:flex-row md:items-end md:justify-between md:px-8 md:py-16">
           <div>
             <h2 className="font-serif text-4xl tracking-tight md:text-5xl">Talk to the office.</h2>

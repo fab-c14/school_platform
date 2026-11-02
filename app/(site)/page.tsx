@@ -3,6 +3,7 @@ import { ArrowUpRightIcon, ClockIcon, MapPinIcon, PhoneIcon } from "@phosphor-ic
 import { schoolPhotos } from "@/content/gallery";
 import { BreezeBand } from "@/components/breeze-band";
 import { BreezeCut } from "@/components/breeze-cut";
+import { NewBadge } from "@/components/new-badge";
 import { SchoolJsonLd } from "@/components/json-ld";
 import { HomeHero } from "@/components/home-hero";
 import { HomeGalleryCarousel } from "@/components/home-gallery-carousel";
@@ -51,7 +52,9 @@ export default async function HomePage() {
         location={site.contact.addressLines.join(", ")}
       />
 
-      <NotificationMarquee notices={site.news.items.map(({ date, title }) => ({ date, title }))} />
+      <NotificationMarquee
+        notices={site.news.items.map(({ date, title, isNew }) => ({ date, title, isNew }))}
+      />
 
       <section className="relative overflow-hidden bg-[#f6ebe4]">
         <BreezeCut from="white" to="mist" variant="wave-gentle" heightClassName="h-6 sm:h-8 md:h-11" />
@@ -299,7 +302,10 @@ export default async function HomePage() {
                     className="group grid gap-2 py-6 sm:grid-cols-[10rem_1fr_auto] sm:items-baseline"
                   >
                     <span className="text-sm text-muted">{formatNewsDate(item.date)}</span>
-                    <span className="font-serif text-2xl tracking-tight transition group-hover:text-accent">{item.title}</span>
+                    <span className="flex flex-wrap items-center gap-3 font-serif text-2xl tracking-tight transition group-hover:text-accent">
+                      <span>{item.title}</span>
+                      {item.isNew ? <NewBadge /> : null}
+                    </span>
                     <ArrowUpRightIcon
                       size={17}
                       weight="bold"

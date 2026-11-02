@@ -57,17 +57,67 @@ export function SiteFooter({
 
           <div>
             <p className="text-xs uppercase tracking-[0.18em] text-paper/55">Explore</p>
-            <ul className="mt-5 grid gap-3 text-sm">
-              {nav
-                .filter((item) => item.href !== "/")
-                .slice(0, 6)
-                .map((item) => (
-                  <li key={item.href + item.label}>
-                    <Link href={item.href} className="text-paper/80 transition hover:text-white">
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
+            <ul className="mt-5 grid grid-cols-2 gap-x-6 gap-y-2.5 text-sm">
+              <li>
+                <Link href="/about" className="text-paper/80 transition hover:text-white">
+                  About School
+                </Link>
+              </li>
+              <li>
+                <Link href="/motto" className="text-paper/80 transition hover:text-white">
+                  Motto & Crest
+                </Link>
+              </li>
+              <li>
+                <Link href="/academics" className="text-paper/80 transition hover:text-white">
+                  Academics
+                </Link>
+              </li>
+              <li>
+                <Link href="/admissions" className="text-paper/80 transition hover:text-white">
+                  Admissions
+                </Link>
+              </li>
+              <li>
+                <Link href="/apply" className="text-paper/80 transition hover:text-white">
+                  Apply Online
+                </Link>
+              </li>
+              <li>
+                <Link href="/campus" className="text-paper/80 transition hover:text-white">
+                  Facilities
+                </Link>
+              </li>
+              <li>
+                <Link href="/gallery" className="text-paper/80 transition hover:text-white">
+                  Photo Gallery
+                </Link>
+              </li>
+              <li>
+                <Link href="/students" className="text-paper/80 transition hover:text-white">
+                  Student Corner
+                </Link>
+              </li>
+              <li>
+                <Link href="/downloads" className="text-paper/80 transition hover:text-white">
+                  Downloads
+                </Link>
+              </li>
+              <li>
+                <Link href="/news" className="text-paper/80 transition hover:text-white">
+                  News & Notices
+                </Link>
+              </li>
+              <li>
+                <Link href="/careers" className="text-paper/80 transition hover:text-white">
+                  Careers
+                </Link>
+              </li>
+              <li>
+                <Link href="/alumni" className="text-paper/80 transition hover:text-white">
+                  Alumni Network
+                </Link>
+              </li>
             </ul>
           </div>
 

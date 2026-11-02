@@ -79,3 +79,31 @@ export function ImageField({
     </div>
   );
 }
+
+export function BooleanField({
+  label,
+  value,
+  onChange,
+  hint,
+}: {
+  label: string;
+  value: boolean;
+  onChange: (value: boolean) => void;
+  hint?: string;
+}) {
+  return (
+    <label className="flex items-center gap-2 text-sm text-ink cursor-pointer select-none">
+      <input
+        type="checkbox"
+        className="h-4 w-4 rounded border-line text-accent accent-accent focus:ring-accent"
+        checked={value}
+        onChange={(event) => onChange(event.target.checked)}
+      />
+      <span>
+        {label}
+        {hint ? <span className="ml-1 text-xs text-muted block sm:inline">({hint})</span> : null}
+      </span>
+    </label>
+  );
+}
+
