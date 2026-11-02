@@ -306,7 +306,7 @@ export default async function HomePage() {
 
       <section id="contact" className="relative isolate overflow-hidden bg-deep text-paper">
         <Photo
-          src="/images/generated/valley-school.jpg"
+          src="/images/campus.jpg"
           alt=""
           fill
           sizes="100vw"

@@ -30,6 +30,7 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
       <SiteFooter
         name={site.name}
         note={site.footer.note}
+        copyrightYear={site.footer.copyrightYear}
         addressLines={[...site.contact.addressLines]}
         hours={site.contact.hours}
         phoneHref={site.contact.phoneHref}

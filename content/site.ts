@@ -60,17 +60,17 @@ export const defaultSite = {
     primaryCta: { href: "/apply", label: "Apply" },
     secondaryCta: { href: "/about", label: "About the school" },
     heroImage: {
-      src: "/images/generated/hero-campus.jpg",
-      alt: "A quiet school courtyard in the mountains of Lolab",
+      src: "/images/campus.jpg",
+      alt: "Welkin International School campus in the mountains of Lolab",
     },
     heroGallery: [
       {
-        src: "/images/generated/classroom.jpg",
-        alt: "A sunlit classroom with wooden desks and books",
+        src: "/images/classroom.jpg",
+        alt: "A classroom at Welkin International School",
       },
       {
-        src: "/images/generated/books.jpg",
-        alt: "Open books and a Qur'an on a wooden desk",
+        src: "/images/library.jpg",
+        alt: "Books in the school library",
       },
     ],
     intro: {
@@ -337,6 +337,7 @@ export const defaultSite = {
   },
   footer: {
     note: "Welkin International School, Sevar Thandipora, Lolab. Excel with Purpose.",
+    copyrightYear: "2026",
   },
 };
 

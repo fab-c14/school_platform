@@ -79,7 +79,12 @@ function SchoolForm({ draft, patch }: { draft: SiteContent; patch: (next: Partia
     <div className="grid gap-4">
       <TextField label="School name" value={draft.name} onChange={(name) => patch({ name })} />
       <TextField label="Short description" value={draft.description} onChange={(description) => patch({ description })} rows={3} />
-      <TextField label="Footer note" value={draft.footer.note} onChange={(note) => patch({ footer: { note } })} rows={3} />
+      <TextField
+        label="Footer note"
+        value={draft.footer.note}
+        onChange={(note) => patch({ footer: { ...draft.footer, note } })}
+        rows={3}
+      />
       {draft.nav.map((item, index) => (
         <TextField
           key={item.href}

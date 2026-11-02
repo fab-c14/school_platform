@@ -8,6 +8,7 @@ type FooterLink = { href: string; label: string };
 export function SiteFooter({
   name,
   note,
+  copyrightYear,
   addressLines,
   hours,
   phoneHref,
@@ -20,6 +21,7 @@ export function SiteFooter({
 }: {
   name: string;
   note: string;
+  copyrightYear: string;
   addressLines: string[];
   hours: string;
   phoneHref: string;
@@ -33,7 +35,7 @@ export function SiteFooter({
   return (
     <footer className="relative isolate overflow-hidden bg-deep text-paper">
       <Photo
-        src="/images/generated/lolab-dusk.jpg"
+        src="/images/campus.jpg"
         alt=""
         fill
         sizes="100vw"
@@ -117,7 +119,7 @@ export function SiteFooter({
 
         <div className="mt-14 flex flex-col gap-3 border-t border-paper/15 pt-6 text-xs text-paper/55 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {new Date().getFullYear()} {name}
+            © {copyrightYear} {name}
           </p>
           <p>Sevar Thandipora, Lolab</p>
         </div>
