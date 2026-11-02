@@ -19,7 +19,7 @@ export default async function AcademicsPage() {
         <p className="mt-5 max-w-[65ch] text-base leading-relaxed text-muted">{page.lede}</p>
       </header>
 
-      <section className="border-t border-line">
+      <section className="breeze-wave border-t border-line">
         <div className="mx-auto grid max-w-[1400px] gap-12 px-5 py-16 md:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
           <ol>
             {page.stages.map((stage) => (
@@ -44,7 +44,7 @@ export default async function AcademicsPage() {
         </div>
       </section>
 
-      <section id="week" className="border-t border-line bg-[#f6ebe4]">
+      <section id="week" className="breeze-wave border-t border-line bg-[#f6ebe4]">
         <div className="mx-auto max-w-[1400px] px-5 py-16 md:px-8">
           <h2 className="font-serif text-3xl tracking-tight md:text-4xl">{page.practiceTitle}</h2>
           <ul className="mt-10 grid gap-10 md:grid-cols-3">

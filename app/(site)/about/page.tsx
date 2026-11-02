@@ -19,7 +19,7 @@ export default async function AboutPage() {
         <p className="mt-5 max-w-[65ch] text-base leading-relaxed text-muted">{about.lede}</p>
       </header>
 
-      <section className="border-t border-line">
+      <section className="breeze-wave border-t border-line">
         <div className="mx-auto grid max-w-[1400px] items-center gap-10 px-5 py-16 md:px-8 lg:grid-cols-2">
           <div>
             <h2 className="font-serif text-3xl leading-[1.15] tracking-tight md:text-5xl">
@@ -45,7 +45,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="border-t border-line">
+      <section className="breeze-wave border-t border-line">
         <div className="mx-auto max-w-[1400px] px-5 py-16 md:px-8">
           <h2 className="font-serif text-3xl tracking-tight md:text-4xl">{about.valuesTitle}</h2>
           <ol className="mt-8 border-t border-line">
@@ -62,7 +62,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section id="leadership" className="border-t border-line">
+      <section id="leadership" className="breeze-wave border-t border-line">
         <div className="mx-auto max-w-[1400px] px-5 py-16 md:px-8">
           <h2 className="font-serif text-3xl tracking-tight md:text-4xl">{about.leadershipTitle}</h2>
           <p className="mt-4 max-w-[65ch] text-base leading-relaxed text-muted">{about.leadershipNote}</p>

@@ -215,10 +215,6 @@ export function AdmissionsForm({
         dob,
         grade,
         previousSchool: fieldValue(data, "previousSchool"),
-        board: fieldValue(data, "board"),
-        previousGrade: fieldValue(data, "previousGrade"),
-        previousScore: fieldValue(data, "previousScore"),
-        previousYear: fieldValue(data, "previousYear"),
         leavingReason: fieldValue(data, "leavingReason"),
         tcAvailable,
         fatherName,
@@ -339,13 +335,9 @@ export function AdmissionsForm({
         </div>
       </Section>
 
-      <Section number="2" title="Previous academic details">
+      <Section number="2" title="Previous school details">
         <div className="grid gap-5 sm:grid-cols-2">
           <TextField name="previousSchool" label="Previous school name" autoComplete="organization" />
-          <TextField name="board" label="Board" placeholder="For example, JKBOSE or CBSE" />
-          <TextField name="previousGrade" label="Grade attended" />
-          <TextField name="previousScore" label="GPA or percentage" inputMode="decimal" />
-          <TextField name="previousYear" label="Year of passing" inputMode="numeric" />
           <TextField name="leavingReason" label="Reason for leaving" />
         </div>
         <RadioGroup
@@ -464,7 +456,7 @@ export function AdmissionsForm({
 
       <Section number="6" title="Document upload">
         <p className="max-w-[62ch] text-sm leading-relaxed text-muted">
-          Attach clear scans or photographs. Birth certificate and passport photo are needed with the application. The report card and Aadhar card can follow.
+          Attach clear scans or photographs. Birth certificate, passport photo, and father photograph are needed with the application. The Aadhar card can follow.
         </p>
         <div className="mt-5 grid gap-4 sm:grid-cols-2">
           {DOCUMENTS.map((config) => (

@@ -133,7 +133,7 @@ export const defaultSite = {
       "Chairman Iftekhar Ul Akbar on Welkin International School, Sevar Thandipora, Lolab.",
     lede: "A message from the Chairman, Iftekhar Ul Akbar, for the families of Sevar Thandipora, Lolab.",
     story: {
-      title: "A word from the Chairman",
+      title: "Chairman message",
       paragraphs: [
         "Assalamu Alaikum Warahmatullahi Wabarakatuh. It is with great pleasure and a profound sense of responsibility that I extend my warmest greetings to each of you. It fills my heart with gratitude to see a long-cherished dream taking shape: a school that blends modern education with Islamic values, nurturing minds and souls together.",
         "I studied in Srinagar, across several reputed institutions. Later, Allah blessed me with the chance to teach students from the primary level up to aspirants preparing for NEET, the Civil Services (IAS, IPS, IFS, and KAS), and JKSSB. Through those years, one reality continued to pain me: how few students from our own region, especially from North Lolab, were among them.",
@@ -286,8 +286,18 @@ export const defaultSite = {
   news: {
     title: "News",
     description: "Photographs and notices from Welkin International School.",
-    lede: "The school has shared photographs of classes and gatherings. Written notices will be added when the office sends them.",
+    lede: "Important school notices, events, and updates for families at Welkin International School.",
     items: [
+      {
+        date: "2026-11-06",
+        title: "New class work starts from 6 November",
+        body: "Regular class work for the new session starts from 6 November 2026. Please contact the office if you need class details.",
+      },
+      {
+        date: "2026-11-04",
+        title: "Annual Day Celebration",
+        body: "The Annual Day Celebration will be held on 4 November 2026. Guests include the SDM Lolab, SDPO Sogam, and CO Kupwara.",
+      },
       {
         date: "2026-10-16",
         title: "Classes photographed",

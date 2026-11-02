@@ -36,7 +36,7 @@ export default async function AdmissionsPage() {
         </div>
       </header>
 
-      <section className="border-t border-line">
+      <section className="breeze-wave border-t border-line">
         <div className="mx-auto grid max-w-[1400px] gap-10 px-5 py-14 md:px-8 lg:grid-cols-[1.08fr_0.92fr] lg:gap-16">
           <div>
             <h2 className="font-serif text-3xl tracking-tight md:text-4xl">How it works</h2>
@@ -83,7 +83,7 @@ export default async function AdmissionsPage() {
         </div>
       </section>
 
-      <section id="dates" className="border-t border-line bg-[#f6ebe4]">
+      <section id="dates" className="breeze-wave border-t border-line bg-[#f6ebe4]">
         <div className="mx-auto max-w-[1400px] px-5 py-14 md:px-8">
           <h2 className="font-serif text-3xl tracking-tight md:text-4xl">{page.datesTitle}</h2>
           <p className="mt-4 max-w-[62ch] text-base leading-relaxed text-muted">{page.datesNote}</p>

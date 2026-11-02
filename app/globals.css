@@ -59,6 +59,7 @@ body {
   clip-path: polygon(0 8%, 100% 0, 100% 100%, 0 100%);
 }
 
+
 .breeze-band-a {
   clip-path: polygon(0 8%, 100% 0, 94% 100%, 0 94%);
 }
@@ -81,4 +82,24 @@ body {
 
 .no-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+.notification-marquee-track {
+  animation: notification-marquee 30s linear infinite;
+}
+
+@keyframes notification-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notification-marquee-track {
+    animation: none;
+  }
 }

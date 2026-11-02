@@ -46,7 +46,7 @@ const faqs = [
   {
     question: "What documents should I keep ready?",
     answer:
-      "A birth certificate and a passport size photograph are needed with the form. The previous year report card and Aadhar card can follow if they are not ready today.",
+      "A birth certificate, passport size photograph, and father photograph are needed with the form. The Aadhar card can follow if it is not ready today.",
   },
   {
     question: "Is there an entrance test?",
@@ -102,7 +102,7 @@ export default async function ApplyPage() {
         }}
       />
 
-      <section className="relative overflow-hidden bg-paper">
+      <section className="breeze-wave relative overflow-hidden bg-paper">
         <div className="relative z-10 mx-auto grid max-w-[1400px] items-center gap-10 px-5 py-12 md:px-8 lg:grid-cols-[1.02fr_0.98fr] lg:gap-14 lg:py-16">
           <div>
             <p className="text-sm text-accent">Admissions</p>
@@ -143,7 +143,7 @@ export default async function ApplyPage() {
         </div>
       </section>
 
-      <section className="border-y border-line bg-[#f6ebe4]">
+      <section className="breeze-wave border-y border-line bg-[#f6ebe4]">
         <dl className="mx-auto grid max-w-[1400px] md:grid-cols-3">
           <div className="border-b border-line px-5 py-6 md:border-b-0 md:border-r md:px-8">
             <dt className="text-sm font-medium text-ink">Sevar Thandipora</dt>
@@ -165,7 +165,7 @@ export default async function ApplyPage() {
         </dl>
       </section>
 
-      <section className="bg-paper">
+      <section className="breeze-wave bg-paper">
         <div className="mx-auto max-w-[1400px] px-5 py-16 md:px-8 md:py-20">
           <div className="max-w-[58ch]">
             <h2 className="font-serif text-4xl leading-[1.06] tracking-tight md:text-5xl">Why families choose Welkin</h2>
@@ -192,7 +192,7 @@ export default async function ApplyPage() {
         </div>
       </section>
 
-      <section id="application" className="scroll-mt-20 border-t border-line bg-[#f6ebe4]">
+      <section id="application" className="breeze-wave scroll-mt-20 border-t border-line bg-[#f6ebe4]">
         <div className="mx-auto max-w-[1100px] px-5 py-16 md:px-8 md:py-20">
           <div className="max-w-[62ch]">
             <h2 className="font-serif text-4xl leading-[1.06] tracking-tight md:text-5xl">Start your application</h2>
@@ -210,7 +210,7 @@ export default async function ApplyPage() {
         </div>
       </section>
 
-      <section id="questions" className="scroll-mt-20 bg-paper">
+      <section id="questions" className="breeze-wave scroll-mt-20 bg-paper">
         <div className="mx-auto max-w-[1400px] px-5 py-16 md:px-8 md:py-20">
           <div className="max-w-[58ch]">
             <h2 className="font-serif text-4xl leading-[1.06] tracking-tight md:text-5xl">Questions families ask</h2>

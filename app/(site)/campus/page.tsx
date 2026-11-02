@@ -19,7 +19,7 @@ export default async function CampusPage() {
         <p className="mt-5 max-w-[65ch] text-base leading-relaxed text-muted">{page.lede}</p>
       </header>
 
-      <section id="places" className="border-t border-line">
+      <section id="places" className="breeze-wave border-t border-line">
         <ul className="mx-auto grid max-w-[1400px] gap-8 px-5 py-16 md:px-8 lg:grid-cols-2">
           {page.places.map((place) => (
             <li key={place.title}>

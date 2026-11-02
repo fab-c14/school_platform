@@ -1,4 +1,4 @@
-export type DocumentKey = "birthCertificate" | "passportPhoto" | "reportCard" | "aadharCard";
+export type DocumentKey = "birthCertificate" | "passportPhoto" | "fatherPhoto" | "aadharCard";
 
 export type DocumentSlot = {
   key: DocumentKey;
@@ -30,12 +30,12 @@ export const DOCUMENT_SLOTS: readonly DocumentSlot[] = [
     required: true,
   },
   {
-    key: "reportCard",
-    label: "Previous year report card",
-    hint: "PDF, up to 5 MB",
-    accept: ".pdf",
-    types: ["application/pdf"],
-    max: 5 * 1024 * 1024,
+    key: "fatherPhoto",
+    label: "Father photograph",
+    hint: "JPG or PNG, up to 2 MB",
+    accept: ".jpg,.jpeg,.png",
+    types: ["image/jpeg", "image/png"],
+    max: 2 * 1024 * 1024,
     required: false,
   },
   {

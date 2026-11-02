@@ -2,9 +2,11 @@ import Link from "next/link";
 import { ArrowUpRightIcon, ClockIcon, MapPinIcon, PhoneIcon } from "@phosphor-icons/react/dist/ssr";
 import { schoolPhotos } from "@/content/gallery";
 import { BreezeBand } from "@/components/breeze-band";
+import { BreezeCut } from "@/components/breeze-cut";
 import { SchoolJsonLd } from "@/components/json-ld";
 import { HomeHero } from "@/components/home-hero";
 import { HomeGalleryCarousel } from "@/components/home-gallery-carousel";
+import { NotificationMarquee } from "@/components/notification-marquee";
 import { Photo } from "@/components/photo";
 import { Reveal } from "@/components/reveal";
 import { formatNewsDate } from "@/content/site";
@@ -49,7 +51,10 @@ export default async function HomePage() {
         location={site.contact.addressLines.join(", ")}
       />
 
-      <section className="bg-[#f6ebe4]">
+      <NotificationMarquee notices={site.news.items.map(({ date, title }) => ({ date, title }))} />
+
+      <section className="relative overflow-hidden bg-[#f6ebe4]">
+        <BreezeCut from="white" to="mist" variant="wave-gentle" heightClassName="h-6 sm:h-8 md:h-11" />
         <dl className="mx-auto grid max-w-[1400px] md:grid-cols-3">
           {home.facts.map((fact, index) => (
             <Reveal
@@ -68,7 +73,8 @@ export default async function HomePage() {
       </section>
 
       <section className="relative overflow-hidden bg-paper">
-        <div className="mx-auto max-w-[1400px] px-5 py-20 md:px-8 md:py-28">
+        <BreezeCut from="mist" to="paper" variant="wave-flow" />
+        <div className="mx-auto max-w-[1400px] px-5 py-16 md:px-8 md:py-24">
           <Reveal>
             <div className="grid gap-5 lg:grid-cols-[0.88fr_1.12fr] lg:items-end">
               <h2 className="max-w-[13ch] font-serif text-4xl leading-[1.04] tracking-[-0.045em] text-ink md:text-6xl">
@@ -126,7 +132,8 @@ export default async function HomePage() {
       </section>
 
       <section className="relative overflow-hidden bg-[#f6ebe4]">
-        <div className="mx-auto grid max-w-[1400px] gap-12 px-5 py-20 md:px-8 md:py-28 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+        <BreezeCut from="paper" to="mist" variant="slant-right" />
+        <div className="mx-auto grid max-w-[1400px] gap-12 px-5 py-16 md:px-8 md:py-24 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <Reveal className="order-2 lg:order-1">
             <div className="relative mx-auto aspect-[4/5] w-full max-w-[34rem]">
               <div className="breeze-cut-story absolute inset-y-0 left-0 right-[18%] overflow-hidden bg-line">
@@ -186,7 +193,8 @@ export default async function HomePage() {
       </section>
 
       <section className="relative overflow-hidden bg-paper">
-        <div className="mx-auto max-w-[1400px] px-5 py-20 md:px-8 md:py-28">
+        <BreezeCut from="mist" to="paper" variant="wave-crest" />
+        <div className="mx-auto max-w-[1400px] px-5 py-16 md:px-8 md:py-24">
           <Reveal>
             <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
               <div>
@@ -209,7 +217,8 @@ export default async function HomePage() {
       </section>
 
       <section className="relative overflow-hidden bg-[#f6ebe4]">
-        <div className="mx-auto grid max-w-[1400px] gap-12 px-5 py-20 md:px-8 md:py-28 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+        <BreezeCut from="paper" to="mist" variant="slant-left" />
+        <div className="mx-auto grid max-w-[1400px] gap-12 px-5 py-16 md:px-8 md:py-24 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <Reveal>
             <div className="relative mx-auto aspect-[4/5] w-full max-w-[34rem]">
               <div className="breeze-cut-story absolute inset-y-0 left-0 right-[15%] overflow-hidden bg-line">
@@ -270,7 +279,8 @@ export default async function HomePage() {
       </section>
 
       <section className="relative overflow-hidden bg-paper">
-        <div className="mx-auto max-w-[1400px] px-5 py-20 md:px-8 md:py-28">
+        <BreezeCut from="mist" to="paper" variant="wave-gentle" flipX />
+        <div className="mx-auto max-w-[1400px] px-5 py-16 md:px-8 md:py-24">
           <Reveal>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <h2 className="font-serif text-4xl tracking-[-0.045em] md:text-5xl">{home.newsTitle}</h2>
@@ -304,18 +314,9 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section id="contact" className="relative isolate overflow-hidden bg-deep text-paper">
-        <Photo
-          src="/images/campus.jpg"
-          alt=""
-          fill
-          sizes="100vw"
-          className="object-cover object-[center_42%] opacity-35"
-        />
-        <span className="absolute inset-0 bg-gradient-to-r from-deep via-deep/92 to-deep/35" aria-hidden />
-        <span className="breeze-cut-cta absolute -right-20 top-0 h-full w-[44%] bg-accent/15" aria-hidden />
-
-        <div className="relative z-10 mx-auto grid max-w-[1400px] gap-12 px-5 py-20 md:px-8 md:py-28 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
+      <section id="contact" className="relative overflow-hidden bg-deep text-paper">
+        <BreezeCut from="paper" to="deep" variant="wave-flow" />
+        <div className="mx-auto grid max-w-[1400px] gap-12 px-5 py-16 md:px-8 md:py-24 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <Reveal>
             <h2 className="max-w-[15ch] font-serif text-4xl leading-[1.02] tracking-[-0.045em] md:text-6xl">
               {home.contactBand.title}

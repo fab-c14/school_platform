@@ -1,7 +1,6 @@
 import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
-import { Photo } from "@/components/photo";
 
 type FooterLink = { href: string; label: string };
 
@@ -33,18 +32,8 @@ export function SiteFooter({
   nav: FooterLink[];
 }) {
   return (
-    <footer className="relative isolate overflow-hidden bg-deep text-paper">
-      <Photo
-        src="/images/campus.jpg"
-        alt=""
-        fill
-        sizes="100vw"
-        className="object-cover object-[center_42%] opacity-25"
-      />
-      <span className="absolute inset-0 bg-gradient-to-r from-deep via-deep/95 to-deep/70" aria-hidden />
-      <span className="breeze-cut-cta absolute -right-24 top-0 h-full w-[46%] bg-accent/10" aria-hidden />
-
-      <div className="relative z-10 mx-auto max-w-[1400px] px-5 pb-8 pt-16 md:px-8 md:pt-24">
+    <footer className="overflow-hidden bg-deep text-paper">
+      <div className="mx-auto max-w-[1400px] px-5 pb-8 pt-16 md:px-8 md:pt-24">
         <div className="grid gap-12 lg:grid-cols-[1.2fr_0.72fr_0.9fr]">
           <div>
             <div className="flex items-center gap-3">

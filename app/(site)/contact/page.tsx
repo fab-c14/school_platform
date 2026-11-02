@@ -18,7 +18,7 @@ export default async function ContactPage() {
         <p className="mt-5 max-w-[65ch] text-base leading-relaxed text-muted">{site.contactPage.lede}</p>
       </header>
 
-      <section className="border-t border-line">
+      <section className="breeze-wave border-t border-line">
         <div className="mx-auto grid max-w-[1400px] gap-12 px-5 py-16 md:px-8 lg:grid-cols-[0.8fr_1.2fr]">
           <address className="not-italic">
             <p className="text-sm text-muted">Address</p>
