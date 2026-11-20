@@ -1,4 +1,4 @@
-import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr";
+import { ArrowUpRightIcon, HeartIcon } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -152,11 +152,32 @@ export function SiteFooter({
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-3 border-t border-paper/15 pt-6 text-xs text-paper/55 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-14 flex flex-wrap items-center justify-between gap-x-8 gap-y-4 border-t border-paper/15 pt-6 text-xs text-paper/65">
           <p>
             © {copyrightYear} {name}
           </p>
           <p>Sevar Thandipora, Lolab</p>
+          <p className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <HeartIcon size={13} weight="fill" className="shrink-0 text-rose-300" aria-hidden />
+            <span>
+              Made with love by{" "}
+              <a
+                href="https://fabsfolio.me"
+                className="font-medium text-paper underline decoration-paper/35 underline-offset-4 transition-colors hover:decoration-paper focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-paper"
+              >
+                Faisal Farooq
+              </a>
+            </span>
+            <span aria-hidden>·</span>
+            <a
+              href="https://github.com/fab-c14"
+              aria-label="fab-c14 on GitHub"
+              className="inline-flex items-center gap-1 text-paper/80 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-paper"
+            >
+              fab-c14
+              <ArrowUpRightIcon size={11} aria-hidden />
+            </a>
+          </p>
         </div>
       </div>
     </footer>
