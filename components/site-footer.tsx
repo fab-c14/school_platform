@@ -38,10 +38,10 @@ export function SiteFooter({
               </span>
               <p className="max-w-[13rem] text-sm font-medium leading-tight tracking-[-0.02em]">{name}</p>
             </div>
-            <p className="mt-7 max-w-md font-serif text-4xl leading-[1.02] tracking-[-0.055em] md:text-5xl">
+            <p className="mt-7 max-w-md font-serif text-4xl font-semibold leading-[1.02] tracking-[-0.055em] md:text-5xl">
               Excel with purpose<span className="text-accent">.</span>
             </p>
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-paper/75">{note}</p>
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-paper-secondary">{note}</p>
             <Link
               href="/contact"
               className="mt-7 inline-flex min-h-11 items-center gap-2 rounded-full bg-paper px-4 text-sm font-medium text-ink transition hover:-translate-y-0.5 hover:bg-accent hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-paper active:scale-[0.98]"
@@ -52,65 +52,65 @@ export function SiteFooter({
           </div>
 
           <div>
-            <p className="text-xs uppercase tracking-[0.18em] text-paper/55">Explore</p>
+            <p className="text-xs uppercase tracking-[0.18em] text-paper-secondary">Explore</p>
             <ul className="mt-5 grid grid-cols-2 gap-x-6 gap-y-2.5 text-sm">
               <li>
-                <Link href="/about" className="text-paper/80 transition hover:text-white">
+                <Link href="/about" className="font-medium text-paper/95 transition hover:text-white hover:underline">
                   About School
                 </Link>
               </li>
               <li>
-                <Link href="/motto" className="text-paper/80 transition hover:text-white">
+                <Link href="/motto" className="font-medium text-paper/95 transition hover:text-white hover:underline">
                   Motto & Crest
                 </Link>
               </li>
               <li>
-                <Link href="/academics" className="text-paper/80 transition hover:text-white">
+                <Link href="/academics" className="font-medium text-paper/95 transition hover:text-white hover:underline">
                   Academics
                 </Link>
               </li>
               <li>
-                <Link href="/admissions" className="text-paper/80 transition hover:text-white">
+                <Link href="/admissions" className="font-medium text-paper/95 transition hover:text-white hover:underline">
                   Admissions
                 </Link>
               </li>
               <li>
-                <Link href="/apply" className="text-paper/80 transition hover:text-white">
+                <Link href="/apply" className="font-medium text-paper/95 transition hover:text-white hover:underline">
                   Apply Online
                 </Link>
               </li>
               <li>
-                <Link href="/campus" className="text-paper/80 transition hover:text-white">
+                <Link href="/campus" className="font-medium text-paper/95 transition hover:text-white hover:underline">
                   Facilities
                 </Link>
               </li>
               <li>
-                <Link href="/gallery" className="text-paper/80 transition hover:text-white">
+                <Link href="/gallery" className="font-medium text-paper/95 transition hover:text-white hover:underline">
                   Photo Gallery
                 </Link>
               </li>
               <li>
-                <Link href="/students" className="text-paper/80 transition hover:text-white">
+                <Link href="/students" className="font-medium text-paper/95 transition hover:text-white hover:underline">
                   Student Corner
                 </Link>
               </li>
               <li>
-                <Link href="/downloads" className="text-paper/80 transition hover:text-white">
+                <Link href="/downloads" className="font-medium text-paper/95 transition hover:text-white hover:underline">
                   Downloads
                 </Link>
               </li>
               <li>
-                <Link href="/news" className="text-paper/80 transition hover:text-white">
+                <Link href="/news" className="font-medium text-paper/95 transition hover:text-white hover:underline">
                   News & Notices
                 </Link>
               </li>
               <li>
-                <Link href="/careers" className="text-paper/80 transition hover:text-white">
+                <Link href="/careers" className="font-medium text-paper/95 transition hover:text-white hover:underline">
                   Careers
                 </Link>
               </li>
               <li>
-                <Link href="/alumni" className="text-paper/80 transition hover:text-white">
+                <Link href="/alumni" className="font-medium text-paper/95 transition hover:text-white hover:underline">
                   Alumni Network
                 </Link>
               </li>
@@ -118,17 +118,17 @@ export function SiteFooter({
           </div>
 
           <div>
-            <p className="text-xs uppercase tracking-[0.18em] text-paper/55">Visit</p>
+            <p className="text-xs uppercase tracking-[0.18em] text-paper-secondary">Visit</p>
             <address className="mt-5 text-sm not-italic leading-relaxed text-paper/80">
               {addressLines.map((line) => (
                 <span key={line} className="block">
                   {line}
                 </span>
               ))}
-              <span className="mt-3 block text-paper/60">{hours}</span>
+              <span className="mt-3 block text-paper-secondary">{hours}</span>
             </address>
 
-            <p className="mt-6 text-xs uppercase tracking-[0.18em] text-paper/55">Office</p>
+            <p className="mt-6 text-xs uppercase tracking-[0.18em] text-paper-secondary">Office</p>
             <div className="mt-3 grid gap-1.5 text-sm">
               <a className="w-fit text-paper/85 transition hover:text-white" href={phoneHref}>
                 {phoneDisplay}
@@ -152,7 +152,7 @@ export function SiteFooter({
           </div>
         </div>
 
-        <div className="mt-14 flex flex-wrap items-center justify-between gap-x-8 gap-y-4 border-t border-paper/15 pt-6 text-xs text-paper/65">
+        <div className="mt-14 flex flex-wrap items-center justify-between gap-x-8 gap-y-4 border-t border-paper/15 pt-6 text-xs text-paper-secondary">
           <p>
             © {copyrightYear} {name}
           </p>

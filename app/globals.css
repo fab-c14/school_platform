@@ -17,8 +17,32 @@
   --color-line: var(--line);
   --color-accent: var(--accent);
   --color-deep: var(--deep);
+  --color-paper-secondary: #cfdae3;
   --font-sans: var(--font-site);
   --font-serif: var(--font-site);
+}
+
+@layer base {
+  .public-site {
+    --ink: #101923;
+    --muted: #3f4d5a;
+    --accent: #a53721;
+    color: var(--ink);
+  }
+
+  .public-site h1 {
+    font-weight: 700;
+    text-wrap: balance;
+  }
+
+  .public-site :is(h2, h3, h4) {
+    font-weight: 600;
+  }
+
+  .public-site :is(button, a):focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
 }
 
 body {

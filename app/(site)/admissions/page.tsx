@@ -69,7 +69,7 @@ export default async function AdmissionsPage() {
       {notices.length > 0 ? (
         <section className="mx-auto max-w-[1400px] px-5 pb-12 md:px-8" aria-labelledby="admission-notices">
           <div className="rounded-2xl border border-line bg-white p-5 sm:p-7">
-            <h2 id="admission-notices" className="text-xl font-semibold tracking-tight">Admissions notices</h2>
+            <h2 id="admission-notices" className="scroll-mt-24 text-xl font-semibold tracking-tight">Admissions notices</h2>
             <ul className="mt-2 divide-y divide-line">
               {notices.map((notice, index) => (
                 <li key={index} className="flex flex-wrap items-baseline gap-x-4 gap-y-1 py-3">

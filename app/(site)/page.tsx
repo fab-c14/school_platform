@@ -112,13 +112,13 @@ export default async function HomePage() {
                       sizes={featured ? "(min-width: 1024px) 58vw, 100vw" : "(min-width: 1024px) 30vw, 100vw"}
                       className="object-cover object-[center_38%] transition duration-700 ease-out group-hover:scale-[1.04]"
                     />
-                    <span className="absolute inset-0 bg-gradient-to-t from-deep/95 via-deep/35 to-deep/5" aria-hidden />
+                    <span className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/10" aria-hidden />
                     <span className="relative z-10 flex w-full items-end justify-between gap-4">
                       <span>
-                        <span className={`block font-serif tracking-tight ${featured ? "text-4xl md:text-5xl" : "text-3xl"}`}>
+                        <span className={`block font-serif font-semibold tracking-tight ${featured ? "text-4xl md:text-5xl" : "text-3xl"}`}>
                           {path.title}
                         </span>
-                        <span className="mt-2 block max-w-sm text-sm leading-relaxed text-paper/85">{path.body}</span>
+                        <span className="mt-2 block max-w-sm text-sm leading-relaxed text-paper">{path.body}</span>
                       </span>
                       <span className="grid size-10 shrink-0 place-items-center rounded-full border border-paper/35 bg-paper/10 transition duration-300 group-hover:bg-paper group-hover:text-ink">
                         <ArrowUpRightIcon size={17} weight="bold" aria-hidden />
@@ -349,22 +349,22 @@ export default async function HomePage() {
           <Reveal delay={0.08}>
             <dl className="grid gap-px border border-paper/15 bg-paper/15 sm:grid-cols-2">
               <div className="bg-deep/85 p-5">
-                <dt className="flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-paper/55">
+                <dt className="flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-paper-secondary">
                   <PhoneIcon size={14} weight="bold" aria-hidden />
                   Office
                 </dt>
                 <dd className="mt-3 text-lg">{site.contact.phoneDisplay}</dd>
-                <dd className="mt-1 text-sm text-paper/70">{site.contact.phoneAltDisplay}</dd>
+                <dd className="mt-1 text-sm text-paper-secondary">{site.contact.phoneAltDisplay}</dd>
               </div>
               <div className="bg-deep/85 p-5">
-                <dt className="flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-paper/55">
+                <dt className="flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-paper-secondary">
                   <MapPinIcon size={14} weight="bold" aria-hidden />
                   Visit
                 </dt>
                 <dd className="mt-3 text-sm leading-relaxed text-paper/85">{site.contact.addressLines.join(", ")}</dd>
               </div>
               <div className="bg-deep/85 p-5 sm:col-span-2">
-                <dt className="flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-paper/55">
+                <dt className="flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-paper-secondary">
                   <ClockIcon size={14} weight="bold" aria-hidden />
                   School hours
                 </dt>

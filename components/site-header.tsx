@@ -33,7 +33,7 @@ export function SiteHeader({
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line/70 bg-paper/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-line bg-white">
       <div className="mx-auto flex min-h-[4.5rem] max-w-[1400px] items-center gap-3 px-4 md:px-8">
         <Link
           href="/"
@@ -52,21 +52,21 @@ export function SiteHeader({
               priority
             />
           </span>
-          <span className="hidden max-w-[12rem] text-sm font-semibold leading-tight tracking-[-0.03em] sm:block">
+          <span className="hidden max-w-[12rem] text-sm font-bold leading-tight min-[400px]:block">
             {name}
           </span>
         </Link>
 
-        <nav className="hidden min-w-0 flex-1 min-[1120px]:block" aria-label="Primary">
-          <ul className="ml-auto flex items-center justify-end gap-1 whitespace-nowrap px-2">
+        <nav className="hidden min-w-0 flex-1 min-[1220px]:block" aria-label="Primary">
+          <ul className="ml-auto flex items-center justify-end gap-0.5 whitespace-nowrap px-2 min-[1360px]:gap-1">
             {nav.map((item) => {
               const active = isActive(item.href);
               return (
                 <li key={item.label} className="group relative shrink-0">
                   <Link
                     href={item.href}
-                    className={`relative inline-flex items-center gap-1 rounded-full px-3 py-2 text-[13px] transition ${
-                      active ? "font-medium text-accent" : "text-muted hover:bg-[#eef2f5] hover:text-ink"
+                    className={`relative inline-flex min-h-10 items-center gap-1 rounded-full px-2 py-2 text-sm text-ink transition-colors min-[1360px]:px-3 ${
+                      active ? "font-bold" : "font-semibold hover:bg-[#eef2f5]"
                     }`}
                     aria-current={active ? "page" : undefined}
                   >
@@ -89,15 +89,15 @@ export function SiteHeader({
                     </span>
                   </Link>
                   {item.children?.length ? (
-                    <ul className="invisible absolute left-0 top-full z-50 min-w-56 translate-y-2 rounded-xl border border-line bg-paper p-2 opacity-0 shadow-[0_18px_45px_rgb(29_43_56_/_0.14)] transition duration-200 before:absolute before:-top-3 before:left-0 before:h-3 before:w-full before:content-[''] group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                    <ul className="invisible absolute left-0 top-full z-50 min-w-56 translate-y-2 rounded-xl border border-line bg-white p-2 opacity-0 shadow-[0_18px_45px_rgb(29_43_56_/_0.14)] transition duration-200 before:absolute before:-top-3 before:left-0 before:h-3 before:w-full before:content-[''] group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
                       {item.children.map((child) => (
                         <li key={child.href + child.label}>
                           <Link
                             href={child.href}
-                            className={`block rounded-lg px-3 py-2.5 text-sm transition ${
+                            className={`block rounded-lg px-3 py-2.5 text-sm font-semibold text-ink transition-colors ${
                               isActive(child.href)
-                                ? "bg-[#efe7e2] font-medium text-accent"
-                                : "text-ink hover:bg-[#eef2f5] hover:text-accent"
+                                ? "bg-[#efe7e2]"
+                                : "hover:bg-[#eef2f5]"
                             }`}
                           >
                             {child.label}
@@ -115,14 +115,14 @@ export function SiteHeader({
         <div className="ml-auto flex items-center gap-2">
           <a
             href={phoneHref}
-            className="hidden size-10 items-center justify-center rounded-full border border-line text-ink transition hover:border-accent hover:bg-accent hover:text-white min-[1120px]:inline-flex"
+            className="hidden size-10 items-center justify-center rounded-full border border-line text-ink transition hover:border-accent hover:bg-accent hover:text-white min-[1220px]:inline-flex"
             aria-label={`Call ${phoneDisplay}`}
           >
             <PhoneIcon size={17} weight="bold" />
           </a>
           <Link
             href="/apply"
-            className="inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full bg-ink px-4 text-sm font-medium text-paper transition hover:-translate-y-0.5 hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent active:scale-[0.98]"
+            className="inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full bg-ink px-4 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent active:scale-[0.98]"
           >
             Apply
             <ArrowUpRightIcon size={15} weight="bold" />
@@ -130,7 +130,7 @@ export function SiteHeader({
         </div>
         <button
           type="button"
-          className="inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-line text-ink transition hover:border-accent hover:bg-accent hover:text-white min-[1120px]:hidden"
+          className="inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-line text-ink transition hover:border-accent hover:bg-accent hover:text-white min-[1220px]:hidden"
           aria-expanded={open}
           aria-controls="mobile-nav"
           onClick={() => setOpenPath(open ? null : pathname)}
@@ -144,7 +144,7 @@ export function SiteHeader({
         {open ? (
           <motion.nav
             id="mobile-nav"
-            className="overflow-hidden border-t border-line bg-paper min-[1120px]:hidden"
+            className="overflow-hidden border-t border-line bg-white min-[1220px]:hidden"
             initial={reduce ? false : { height: 0, opacity: 0 }}
             animate={reduce ? undefined : { height: "auto", opacity: 1 }}
             exit={reduce ? undefined : { height: 0, opacity: 0 }}
@@ -160,9 +160,10 @@ export function SiteHeader({
                       <div className="flex items-center justify-between">
                         <Link
                           href={item.href}
-                          className={`block flex-1 px-5 py-3 text-base ${
-                            isActive(item.href) ? "font-medium text-accent" : "text-ink"
+                          className={`block flex-1 px-5 py-3 text-base font-semibold text-ink ${
+                            isActive(item.href) ? "bg-[#efe7e2]" : "hover:bg-[#eef2f5]"
                           }`}
+                          aria-current={isActive(item.href) ? "page" : undefined}
                           onClick={() => setOpenPath(null)}
                         >
                           {item.label}
@@ -185,7 +186,7 @@ export function SiteHeader({
                             <li key={child.href + child.label}>
                               <Link
                                 href={child.href}
-                                className="block px-8 py-2 text-sm text-ink"
+                                className="block px-8 py-2.5 text-sm font-medium text-ink hover:underline"
                                 onClick={() => setOpenPath(null)}
                               >
                                 {child.label}

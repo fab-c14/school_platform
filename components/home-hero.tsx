@@ -90,7 +90,7 @@ export function HomeHero({
 
           <motion.h1
             variants={copyItem}
-            className="mt-5 max-w-[11ch] font-serif text-[clamp(3.25rem,7vw,6.4rem)] leading-[0.94] tracking-[-0.065em] text-ink"
+            className="mt-5 max-w-[11ch] font-serif text-[clamp(3.25rem,7vw,6.4rem)] leading-[0.99] tracking-[-0.05em] text-ink"
           >
             <span className="block">{headline[0]}</span>
             <span className="relative mt-1 block w-fit text-accent">

@@ -206,7 +206,7 @@ export default async function CampusPage() {
         <div className="mx-auto max-w-[1400px] px-5 py-14 md:px-8 md:py-20">
           <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div>
-              <span className="text-xs font-semibold uppercase tracking-[0.16em] text-paper/60">Visit In Person</span>
+              <span className="text-xs font-semibold uppercase tracking-[0.16em] text-paper-secondary">Visit In Person</span>
               <h2 className="mt-3 font-serif text-4xl tracking-tight md:text-5xl">
                 Come see the campus in Sevar Thandipora.
               </h2>
@@ -235,23 +235,23 @@ export default async function CampusPage() {
               <h3 className="font-serif text-2xl text-paper">Campus Overview</h3>
               <dl className="mt-6 space-y-4 text-sm divide-y divide-paper/10">
                 <div className="flex justify-between pt-3">
-                  <dt className="text-paper/60">Location</dt>
+                  <dt className="text-paper-secondary">Location</dt>
                   <dd className="font-medium text-paper">Sevar Thandipora, Lolab</dd>
                 </div>
                 <div className="flex justify-between pt-3">
-                  <dt className="text-paper/60">District</dt>
+                  <dt className="text-paper-secondary">District</dt>
                   <dd className="font-medium text-paper">Kupwara, Jammu & Kashmir</dd>
                 </div>
                 <div className="flex justify-between pt-3">
-                  <dt className="text-paper/60">Affiliation & Levels</dt>
+                  <dt className="text-paper-secondary">Affiliation & Levels</dt>
                   <dd className="font-medium text-paper">Nursery to Grade 10</dd>
                 </div>
                 <div className="flex justify-between pt-3">
-                  <dt className="text-paper/60">School Hours</dt>
+                  <dt className="text-paper-secondary">School Hours</dt>
                   <dd className="font-medium text-paper">8:00 AM – 3:30 PM (Mon–Fri)</dd>
                 </div>
                 <div className="flex justify-between pt-3">
-                  <dt className="text-paper/60">Admissions Desk</dt>
+                  <dt className="text-paper-secondary">Admissions Desk</dt>
                   <dd className="font-medium text-accent">Active for 2026-27</dd>
                 </div>
               </dl>

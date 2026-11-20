@@ -13,7 +13,7 @@ export function NotificationMarquee({ notices }: { notices: Notice[] }) {
   const repeated = [...notices, ...notices];
 
   return (
-    <section className="border-b border-line bg-white text-ink" aria-label="School notifications">
+    <section id="school-notices" className="scroll-mt-24 border-b border-line bg-white text-ink" aria-label="School notifications">
       <div className="mx-auto flex max-w-[1400px] items-center gap-4 px-5 py-3 md:px-8">
         <Link
           href="/news"
