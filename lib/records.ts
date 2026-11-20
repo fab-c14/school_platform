@@ -50,7 +50,7 @@ function asFile(row: FileRow): StoredFile {
   return {
     id: row.id,
     name: row.name,
-    url: row.bucket === "admissions" ? `/api/media/${row.id}` : publicObjectUrl(row.bucket, row.path),
+    url: `/api/media/${row.id}`,
     kind: row.kind,
     createdAt: row.created_at,
   };

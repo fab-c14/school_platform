@@ -1,6 +1,5 @@
 import Link from "next/link";
 import {
-  ArrowDownIcon,
   ArrowUpRightIcon,
   FilePdfIcon,
   PhoneIcon,
@@ -22,65 +21,6 @@ export async function generateMetadata() {
   );
 }
 
-const standardDocuments = [
-  {
-    title: "School Prospectus & Admission Guide 2026-27",
-    category: "Admissions",
-    size: "2.4 MB",
-    type: "PDF",
-    description: "Detailed overview of academic programs, Islamic studies curriculum, faculty, fee schedule, and campus facilities.",
-    fileUrl: "/apply#application",
-  },
-  {
-    title: "Printable Student Admission Application Form",
-    category: "Forms",
-    size: "1.1 MB",
-    type: "PDF",
-    description: "Standard physical form for parents wishing to submit their application directly to the school administrative desk.",
-    fileUrl: "/apply#application",
-  },
-  {
-    title: "Annual Academic Calendar & Holiday Schedule 2026",
-    category: "Academics",
-    size: "820 KB",
-    type: "PDF",
-    description: "Term assessment dates, parent-teacher meetings, summer and winter vacations, and national/Islamic holiday observances.",
-    fileUrl: "#",
-  },
-  {
-    title: "Grade-Wise Prescribed Book List (Nursery to 10th)",
-    category: "Curriculum",
-    size: "950 KB",
-    type: "PDF",
-    description: "Complete list of prescribed textbooks, notebooks, and reference materials for all grades for the current academic session.",
-    fileUrl: "#",
-  },
-  {
-    title: "School Uniform & Dress Code Circular (Summer & Winter)",
-    category: "Policy",
-    size: "640 KB",
-    type: "PDF",
-    description: "Specifications for formal uniform, physical education (P.E.) house tracksuits, winter blazers, sweaters, and headgear.",
-    fileUrl: "#",
-  },
-  {
-    title: "Medical Record & Emergency Undertaking Form",
-    category: "Forms",
-    size: "480 KB",
-    type: "PDF",
-    description: "Required emergency medical authorization, blood group declaration, and allergy notification form for admitted students.",
-    fileUrl: "#",
-  },
-  {
-    title: "Transfer Certificate (TC) Application Procedure",
-    category: "Administration",
-    size: "390 KB",
-    type: "PDF",
-    description: "Guidelines and application format for requesting student migration or school leaving certificates.",
-    fileUrl: "#",
-  },
-];
-
 export default async function DownloadsPage() {
   const site = await getSite();
   const uploadedFiles = await listPublicDocuments();
@@ -97,82 +37,33 @@ export default async function DownloadsPage() {
         </p>
       </header>
 
-      {/* Official Circulars Section */}
-      <section className="relative overflow-hidden bg-[#f6ebe4]">
+      <section className="relative overflow-hidden bg-[#f6ebe4]" aria-labelledby="school-downloads">
         <BreezeCut from="paper" to="mist" variant="wave-flow" />
         <div className="mx-auto max-w-[1400px] px-5 py-14 md:px-8 md:py-20">
-          <div className="max-w-2xl">
-            <span className="text-sm font-semibold uppercase tracking-[0.16em] text-accent">Official Publications</span>
-            <h2 className="mt-3 font-serif text-4xl leading-[1.06] tracking-tight md:text-5xl">
-              Forms & Guidelines
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-muted">
-              Click to download or view any document. Physical printed copies are also available free of charge at the main school office.
-            </p>
-          </div>
-
-          <div className="mt-10 grid gap-5 md:grid-cols-2">
-            {standardDocuments.map((doc) => (
-              <div
-                key={doc.title}
-                className="flex flex-col justify-between rounded-2xl border border-line bg-white p-6 shadow-sm transition hover:shadow-md md:p-7"
-              >
-                <div>
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="inline-block rounded-md bg-[#f6ebe4] px-2.5 py-1 text-xs font-semibold text-accent uppercase">
-                      {doc.category}
-                    </span>
-                    <span className="flex items-center gap-1 font-mono text-xs text-muted">
-                      <FilePdfIcon size={16} className="text-accent" />
-                      {doc.type} • {doc.size}
-                    </span>
+          <h2 id="school-downloads" className="font-serif text-4xl tracking-tight md:text-5xl">Forms & guidelines</h2>
+          {uploadedFiles.length ? (
+            <ul className="mt-8 divide-y divide-line rounded-2xl border border-line bg-white">
+              {uploadedFiles.map((file) => (
+                <li key={file.id} className="flex flex-wrap items-center justify-between gap-3 p-5 md:px-7">
+                  <div className="flex min-w-0 items-center gap-3">
+                    <FilePdfIcon size={24} weight="duotone" className="shrink-0 text-accent" aria-hidden />
+                    <span className="wrap-anywhere font-semibold text-ink">{file.name}</span>
                   </div>
-                  <h3 className="mt-4 font-serif text-2xl tracking-tight text-ink">{doc.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">{doc.description}</p>
-                </div>
-
-                <div className="mt-6 flex items-center justify-between border-t border-line/60 pt-4">
-                  <span className="text-xs text-muted">Official Document</span>
                   <a
-                    href={doc.fileUrl}
-                    className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline"
+                    href={file.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`Open ${file.name} PDF (opens in a new tab)`}
+                    className="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-line px-4 text-sm font-medium text-ink hover:bg-[#f6ebe4] hover:text-accent"
                   >
-                    <span>Download / Open</span>
-                    <ArrowDownIcon size={15} weight="bold" />
+                    Open PDF <ArrowUpRightIcon size={14} weight="bold" aria-hidden />
                   </a>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Uploaded Office Documents (if any uploaded by admin) */}
-          {uploadedFiles.length > 0 ? (
-            <div className="mt-14">
-              <h3 className="font-serif text-2xl text-ink">Recently Uploaded Notices from Office</h3>
-              <ul className="mt-6 divide-y divide-line rounded-2xl border border-line bg-white shadow-sm">
-                {uploadedFiles.map((file) => (
-                  <li key={file.id} className="flex items-center justify-between p-5 md:px-7">
-                    <div className="flex items-center gap-3">
-                      <FilePdfIcon size={24} weight="duotone" className="text-accent" />
-                      <div>
-                        <p className="font-serif text-lg text-ink">{file.name}</p>
-                        <p className="text-xs text-muted">Uploaded circular</p>
-                      </div>
-                    </div>
-                    <a
-                      href={file.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 rounded-full border border-line px-4 py-1.5 text-xs font-medium text-ink transition hover:bg-[#f6ebe4] hover:text-accent"
-                    >
-                      <span>View File</span>
-                      <ArrowUpRightIcon size={14} weight="bold" />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="mt-4 text-muted">No PDFs are published yet. Contact the school office if you need a printed copy.</p>
+          )}
         </div>
       </section>
 

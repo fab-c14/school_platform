@@ -30,5 +30,7 @@ export async function GET(
     return NextResponse.redirect(signed.data.signedUrl, { headers: { "Cache-Control": "private, no-store" } });
   }
 
-  return NextResponse.redirect(publicObjectUrl(String(data.bucket), String(data.path)));
+  return NextResponse.redirect(publicObjectUrl(String(data.bucket), String(data.path)), {
+    headers: { "Cache-Control": "no-store" },
+  });
 }

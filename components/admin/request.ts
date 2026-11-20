@@ -9,7 +9,7 @@ export async function adminRequest<T>(url: string, options: RequestInit): Promis
   if (response.status === 401 && url !== "/api/admin/login") {
     throw new Error("Your session expired. Sign in again in another tab, then retry here.");
   }
-  if (response.status === 413 && url === "/api/admin/upload") {
+  if (response.status === 413 && (url === "/api/admin/upload" || url.startsWith("/api/admin/documents/"))) {
     throw new Error("This file exceeds the hosting upload limit. Choose a smaller file.");
   }
   if (!response.ok || body === null) {

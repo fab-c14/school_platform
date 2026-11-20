@@ -1,9 +1,5 @@
-"use client";
-
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useState } from "react";
-import { adminRequest } from "@/components/admin/request";
+import { PublicDownloadsEditor } from "@/components/admin/public-downloads-editor";
 import type { StoredFile, NoteSummary } from "@/lib/records";
 
 export function OfficeDesk({ files, notes, page, hasNext }: {
@@ -12,68 +8,9 @@ export function OfficeDesk({ files, notes, page, hasNext }: {
   page: number;
   hasNext: boolean;
 }) {
-  const router = useRouter();
-  const [error, setError] = useState("");
-  const [busy, setBusy] = useState(false);
-  const [success, setSuccess] = useState("");
-
-  async function onFile(file: File | undefined) {
-    if (!file) return;
-    setSuccess("");
-    if (file.size > 10 * 1024 * 1024) {
-      setError("Choose a PDF up to 10 MB.");
-      return;
-    }
-    setBusy(true);
-    setError("");
-    const data = new FormData();
-    data.set("file", file);
-    data.set("kind", "document");
-    try {
-      await adminRequest("/api/admin/upload", { method: "POST", body: data });
-      setSuccess("PDF published.");
-      router.refresh();
-    } catch (error) {
-      setError((error as Error).message);
-    } finally {
-      setBusy(false);
-    }
-  }
-
   return (
     <div className="admin-office-grid">
-      <section className="admin-surface min-w-0">
-        <h2 className="admin-section-title">Public downloads</h2>
-        <label className="admin-item block text-sm text-ink">
-          Upload a PDF, up to 10 MB
-          <input
-            className="mt-2 block w-full text-sm"
-            type="file"
-            accept="application/pdf"
-            disabled={busy}
-            onChange={(event) => {
-              const file = event.target.files?.[0];
-              event.target.value = "";
-              void onFile(file);
-            }}
-          />
-        </label>
-        <p className="mt-3 text-sm text-muted" role="status">{busy ? "Uploading…" : success}</p>
-        {error ? <p className="mt-3 admin-error" role="alert">{error}</p> : null}
-        {files === null ? <p className="admin-message admin-error" role="alert">Downloads could not be loaded. Check Supabase and refresh the page.</p> : null}
-        <ul className="divide-y divide-line">
-          {files?.map((file) => (
-            <li key={file.id} className="break-words py-3 text-sm">
-              <a className="underline decoration-accent underline-offset-4" href={file.url}>
-                {file.name}
-              </a>
-            </li>
-          ))}
-          {files?.length === 0 ? (
-            <li className="py-3 text-sm text-muted">No PDFs published yet.</li>
-          ) : null}
-        </ul>
-      </section>
+      <PublicDownloadsEditor files={files} />
       <section className="admin-surface min-w-0">
         <h2 className="admin-section-title">Applications and enquiries</h2>
         {notes === null ? <p className="admin-message admin-error" role="alert">Applications could not be loaded. Check Supabase and refresh the page.</p> : null}
