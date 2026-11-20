@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Enter the class you are asking about." }, { status: 400 });
   }
   if (!supabaseConfigured()) {
-    return NextResponse.json({ stored: false, mailed: false });
+    return NextResponse.json({ error: "The office system is unavailable. Try again later or call the school." }, { status: 503 });
   }
 
   const supabase = getSupabase();

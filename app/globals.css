@@ -7,6 +7,7 @@
   --line: #d7dfe6;
   --accent: #c4472b;
   --deep: #21384a;
+  --font-site: "Segoe UI", system-ui, sans-serif;
 }
 
 @theme inline {
@@ -16,14 +17,14 @@
   --color-line: var(--line);
   --color-accent: var(--accent);
   --color-deep: var(--deep);
-  --font-sans: var(--font-geist);
-  --font-serif: var(--font-geist);
+  --font-sans: var(--font-site);
+  --font-serif: var(--font-site);
 }
 
 body {
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--font-geist), sans-serif;
+  font-family: var(--font-site);
 }
 
 ::selection {
@@ -32,7 +33,7 @@ body {
 }
 
 .font-serif {
-  font-family: var(--font-geist), sans-serif;
+  font-family: var(--font-site);
 }
 
 .hero-cut-main {

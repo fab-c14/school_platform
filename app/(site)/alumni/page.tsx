@@ -3,7 +3,6 @@ import {
   ArrowUpRightIcon,
   GraduationCapIcon,
   HandshakeIcon,
-  HeartIcon,
   LightbulbIcon,
   PhoneIcon,
   SparkleIcon,

@@ -3,7 +3,6 @@ import {
   ArrowUpRightIcon,
   BookOpenIcon,
   ClockIcon,
-  FlagIcon,
   HandHeartIcon,
   PaintBrushIcon,
   SparkleIcon,
@@ -120,7 +119,6 @@ const dailySchedule = [
 ];
 
 export default async function StudentsPage() {
-  const site = await getSite();
 
   return (
     <main className="w-full max-w-full overflow-x-clip">
@@ -221,7 +219,7 @@ export default async function StudentsPage() {
 
           <div className="mt-10 overflow-hidden rounded-2xl border border-line bg-white shadow-sm">
             <ol className="divide-y divide-line">
-              {dailySchedule.map((item, index) => (
+              {dailySchedule.map((item) => (
                 <li
                   key={item.time}
                   className="grid gap-3 p-5 sm:grid-cols-[10rem_1fr] sm:items-baseline md:px-8 md:py-6"

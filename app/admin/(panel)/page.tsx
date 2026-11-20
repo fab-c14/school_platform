@@ -1,42 +1,37 @@
 import { Suspense } from "react";
-import { OfficeDesk } from "@/components/admin/documents";
 import { Editor } from "@/components/admin/editor";
-import { listFilesForAdmin, listNotesForAdmin } from "@/lib/records";
+import { requireAdminSession } from "@/lib/admin-session";
 import { readSiteForAdmin } from "@/lib/site-store";
 
 export default function AdminPage() {
   return (
-    <Suspense fallback={<p className="text-sm text-muted">Loading the editor…</p>}>
+    <Suspense fallback={<p className="admin-surface" role="status">Loading the editor…</p>}>
       <EditorLoader />
     </Suspense>
   );
 }
 
 async function EditorLoader() {
+  await requireAdminSession();
   let content;
   try {
     content = await readSiteForAdmin();
   } catch (error) {
     const message = error instanceof Error ? error.message : "The database could not be reached.";
     return (
-      <main>
-        <h1 className="font-serif text-4xl tracking-tight">Database is not connected</h1>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">{message}</p>
+      <main className="admin-surface">
+        <h1 className="admin-title">Site content</h1>
+        <p className="admin-message admin-error" role="alert">{message}</p>
       </main>
     );
   }
-  const [files, notes] = await Promise.all([listFilesForAdmin(), listNotesForAdmin()]);
-
   return (
     <main>
-      <h1 className="font-serif text-4xl tracking-tight">Edit the site</h1>
-      <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
-        Change the text, then save. Use Replace photo on any picture. JPG, PNG, and WebP up to 5 MB.
-      </p>
-      <div className="mt-8">
-        <Editor initial={content} />
-      </div>
-      <OfficeDesk files={files} notes={notes} />
+      <header className="admin-page-header">
+        <h1 className="admin-title">Site content</h1>
+        <p>Update public pages, school details and photos.</p>
+      </header>
+      <Editor initial={content} />
     </main>
   );
 }

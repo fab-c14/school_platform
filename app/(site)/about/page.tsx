@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRightIcon, CheckCircleIcon, MapPinIcon, PhoneIcon } from "@phosphor-icons/react/dist/ssr";
+import { ArrowUpRightIcon, MapPinIcon } from "@phosphor-icons/react/dist/ssr";
 import { BreezeCut } from "@/components/breeze-cut";
 import { Photo } from "@/components/photo";
 import { pageMetadata } from "@/lib/metadata";

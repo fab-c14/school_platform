@@ -18,7 +18,13 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## School office
+
+Copy `.env.example` to `.env.local` if you are setting up a new checkout. Set `ADMIN_EMAIL`, `ADMIN_PASSWORD`, and `AUTH_SECRET` for sign-in. Use the project URL from Supabase for `NEXT_PUBLIC_SUPABASE_URL` and set `SUPABASE_SECRET_KEY` (or `SUPABASE_SERVICE_ROLE_KEY`) on the server. Apply [the database schema](supabase/schema.sql) in that project's SQL Editor, then restart the app.
+
+For a new database, run `node --env-file=.env.local scripts/seed-site.mjs` with Node 22.18+ after applying the schema. The seed loads the original notices and preserves an existing notice list.
+
+Open `/admin` to edit content, publish notices to Home or Admissions, upload public PDFs, and review complete applications and enquiries in Office Desk.
 
 ## Learn More
 

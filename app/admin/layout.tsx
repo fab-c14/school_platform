@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import "./admin.css";
 
 export const metadata: Metadata = {
   title: "Office",
@@ -7,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
-  return <div className="flex min-h-full flex-1 flex-col">{children}</div>;
+  return <div className="admin-shell flex min-h-full flex-1 flex-col">{children}</div>;
 }

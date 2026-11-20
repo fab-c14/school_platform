@@ -2,75 +2,87 @@
 
 import { useState } from "react";
 import type { SiteContent } from "@/content/site";
-import { BooleanField, ImageField, TextField } from "@/components/admin/fields";
+import { BooleanField, ImageField, TextField, UploadActivity } from "@/components/admin/fields";
+import { adminRequest } from "@/components/admin/request";
 
 const sections = ["School", "Home", "About", "Academics", "Admissions", "Campus", "News", "Office"] as const;
 type Section = (typeof sections)[number];
 
 export function Editor({ initial }: { initial: SiteContent }) {
   const [draft, setDraft] = useState(initial);
+  const [saved, setSaved] = useState(initial);
   const [section, setSection] = useState<Section>("School");
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState<{ text: string; error?: boolean }>();
   const [busy, setBusy] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const changes = Object.fromEntries(Object.entries(draft).filter(([key, value]) => value !== saved[key as keyof SiteContent]));
+  const dirty = Object.keys(changes).length > 0;
 
   function patch(next: Partial<SiteContent>) {
     setDraft((current) => ({ ...current, ...next }));
+    setStatus(undefined);
   }
 
   async function save() {
     setBusy(true);
-    setStatus("");
-    const response = await fetch("/api/admin/site", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(draft),
-    });
-    const body = (await response.json()) as SiteContent & { error?: string };
-    setBusy(false);
-    if (!response.ok) {
-      setStatus(body.error || "Save failed.");
-      return;
+    setStatus(undefined);
+    try {
+      const body = await adminRequest<SiteContent>("/api/admin/site", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(changes),
+      });
+      setDraft(body);
+      setSaved(body);
+      setStatus({ text: "Changes published." });
+    } catch (error) {
+      setStatus({ text: (error as Error).message, error: true });
+    } finally {
+      setBusy(false);
     }
-    setDraft(body);
-    setStatus("Saved. Refresh the public page to see it.");
   }
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[12rem_1fr]">
-      <nav className="flex gap-2 overflow-x-auto lg:flex-col" aria-label="Editor sections">
+    <fieldset disabled={busy || uploading} className="admin-editor">
+      <nav className="admin-section-nav" aria-label="Editor sections">
         {sections.map((item) => (
           <button
             key={item}
             type="button"
             onClick={() => setSection(item)}
-            className={`px-3 py-2 text-left text-sm ${section === item ? "bg-ink text-paper" : "text-muted"}`}
+            aria-pressed={section === item}
           >
             {item}
           </button>
         ))}
       </nav>
-      <div className="grid gap-6">
-        {section === "School" ? <SchoolForm draft={draft} patch={patch} /> : null}
-        {section === "Home" ? <HomeForm draft={draft} patch={patch} /> : null}
-        {section === "About" ? <AboutForm draft={draft} patch={patch} /> : null}
-        {section === "Academics" ? <AcademicsForm draft={draft} patch={patch} /> : null}
-        {section === "Admissions" ? <AdmissionsForm draft={draft} patch={patch} /> : null}
-        {section === "Campus" ? <CampusForm draft={draft} patch={patch} /> : null}
-        {section === "News" ? <NewsForm draft={draft} patch={patch} /> : null}
-        {section === "Office" ? <OfficeForm draft={draft} patch={patch} /> : null}
-        <div className="flex flex-wrap items-center gap-4">
+      <div className="admin-surface min-w-0">
+        <h2 className="admin-section-title">{section}</h2>
+        <UploadActivity.Provider value={setUploading}>
+          {section === "School" ? <SchoolForm draft={draft} patch={patch} /> : null}
+          {section === "Home" ? <HomeForm draft={draft} patch={patch} /> : null}
+          {section === "About" ? <AboutForm draft={draft} patch={patch} /> : null}
+          {section === "Academics" ? <AcademicsForm draft={draft} patch={patch} /> : null}
+          {section === "Admissions" ? <AdmissionsForm draft={draft} patch={patch} /> : null}
+          {section === "Campus" ? <CampusForm draft={draft} patch={patch} /> : null}
+          {section === "News" ? <NewsForm draft={draft} patch={patch} /> : null}
+          {section === "Office" ? <OfficeForm draft={draft} patch={patch} /> : null}
+        </UploadActivity.Provider>
+        <div className="admin-savebar">
           <button
             type="button"
             onClick={save}
-            disabled={busy}
-            className="bg-accent px-5 py-3 text-sm text-white active:scale-[0.98] disabled:opacity-60"
+            disabled={!dirty}
+            className="admin-button admin-button-primary"
           >
             {busy ? "Saving…" : "Save changes"}
           </button>
-          {status ? <p className="text-sm text-muted">{status}</p> : null}
+          <p className={status?.error ? "admin-error" : "text-muted"} role={status?.error ? "alert" : "status"}>
+            {status?.text || (uploading ? "Uploading photo…" : dirty ? "Unsaved changes" : "All changes saved")}
+          </p>
         </div>
       </div>
-    </div>
+    </fieldset>
   );
 }
 
@@ -101,6 +113,7 @@ function SchoolForm({ draft, patch }: { draft: SiteContent; patch: (next: Partia
         label="Link preview image"
         src={draft.ogImage}
         alt={draft.name}
+        editAlt={false}
         onChange={(next) => patch({ ogImage: next.src })}
       />
     </div>
@@ -463,7 +476,8 @@ function NewsForm({ draft, patch }: { draft: SiteContent; patch: (next: Partial<
       {page.items.map((item, index) => (
         <div key={index} className="grid gap-3 border border-line p-3">
           <TextField
-            label="Date (YYYY-MM-DD)"
+            label="Date"
+            type="date"
             value={item.date}
             onChange={(date) => {
               const items = page.items.map((row, rowIndex) => (rowIndex === index ? { ...row, date } : row));
@@ -488,8 +502,7 @@ function NewsForm({ draft, patch }: { draft: SiteContent; patch: (next: Partial<
             rows={4}
           />
           <BooleanField
-            label="Show animated 'NEW ★' badge"
-            hint="Displays pulsing badge in marquee & circulars"
+            label="Show the New badge"
             value={item.isNew ?? false}
             onChange={(isNew) => {
               const items = page.items.map((row, rowIndex) => (rowIndex === index ? { ...row, isNew } : row));
@@ -507,7 +520,8 @@ function NewsForm({ draft, patch }: { draft: SiteContent; patch: (next: Partial<
       ))}
       <button
         type="button"
-        className="w-fit border border-ink px-4 py-2 text-sm"
+        disabled={page.items.length >= 20}
+        className="admin-button admin-button-secondary w-fit"
         onClick={() =>
           setPage({
             items: [

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRightIcon, ImagesIcon, PhoneIcon } from "@phosphor-icons/react/dist/ssr";
+import { ArrowUpRightIcon, PhoneIcon } from "@phosphor-icons/react/dist/ssr";
 import { schoolPhotos } from "@/content/gallery";
 import { BreezeCut } from "@/components/breeze-cut";
 import { GalleryGrid } from "@/components/gallery-grid";

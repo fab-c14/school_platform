@@ -3,7 +3,6 @@ import {
   ArrowUpRightIcon,
   BusIcon,
   ClockIcon,
-  EnvelopeSimpleIcon,
   MapPinIcon,
   PhoneIcon,
   ShieldCheckIcon,

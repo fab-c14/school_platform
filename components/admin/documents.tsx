@@ -1,124 +1,113 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useState } from "react";
-import type { StoredFile, StoredNote } from "@/lib/records";
+import { adminRequest } from "@/components/admin/request";
+import type { StoredFile, NoteSummary } from "@/lib/records";
 
-export function OfficeDesk({ files, notes }: { files: StoredFile[]; notes: StoredNote[] }) {
+export function OfficeDesk({ files, notes, page, hasNext }: {
+  files: StoredFile[] | null;
+  notes: NoteSummary[] | null;
+  page: number;
+  hasNext: boolean;
+}) {
   const router = useRouter();
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [success, setSuccess] = useState("");
 
   async function onFile(file: File | undefined) {
     if (!file) return;
+    setSuccess("");
+    if (file.size > 10 * 1024 * 1024) {
+      setError("Choose a PDF up to 10 MB.");
+      return;
+    }
     setBusy(true);
     setError("");
     const data = new FormData();
     data.set("file", file);
     data.set("kind", "document");
-    const response = await fetch("/api/admin/upload", { method: "POST", body: data });
-    const body = (await response.json()) as { error?: string };
-    setBusy(false);
-    if (!response.ok) {
-      setError(body.error || "Upload failed.");
-      return;
+    try {
+      await adminRequest("/api/admin/upload", { method: "POST", body: data });
+      setSuccess("PDF published.");
+      router.refresh();
+    } catch (error) {
+      setError((error as Error).message);
+    } finally {
+      setBusy(false);
     }
-    router.refresh();
   }
 
   return (
-    <section className="mt-16 border-t border-line pt-10">
-      <h2 className="font-serif text-3xl tracking-tight">Documents and applications</h2>
-      <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
-        PDFs appear on the Downloads page. Applications are kept here. Email is not sent yet.
-      </p>
-      <label className="mt-6 block text-sm text-ink">
-        Upload a PDF, up to 10 MB
-        <input
-          className="mt-2 block w-full text-sm"
-          type="file"
-          accept="application/pdf"
-          onChange={(event) => onFile(event.target.files?.[0])}
-        />
-      </label>
-      {busy ? <p className="mt-3 text-sm text-muted">Uploading…</p> : null}
-      {error ? <p className="mt-3 text-sm text-accent">{error}</p> : null}
-      <ul className="mt-6 divide-y divide-line border-y border-line">
-        {files.filter((file) => file.kind === "document").map((file) => (
-          <li key={file.id} className="py-3 text-sm">
-            <a className="underline decoration-accent underline-offset-4" href={file.url}>
-              {file.name}
-            </a>
-          </li>
-        ))}
-        {files.every((file) => file.kind !== "document") ? (
-          <li className="py-3 text-sm text-muted">No documents yet.</li>
-        ) : null}
-      </ul>
-      <h3 className="mt-10 font-serif text-2xl">Recent notes</h3>
-      <ul className="mt-4 grid gap-4">
-        {notes.map((note) => (
-          <li key={note.id} className="border border-line p-4 text-sm">
-            <p className="text-ink">
-              {note.kind === "application" ? "Application" : "Note"} · {note.studentName}
-              {note.className ? `, ${note.className}` : ""}
-            </p>
-            <p className="mt-1 text-muted">
-              {note.parentName} · {note.phone}
-            </p>
-            <p className="mt-2 leading-relaxed">{note.message}</p>
-            <ApplicationDetails note={note} />
-          </li>
-        ))}
-        {notes.length === 0 ? <li className="text-sm text-muted">No notes yet.</li> : null}
-      </ul>
-    </section>
-  );
-}
-
-function ApplicationDetails({ note }: { note: StoredNote }) {
-  const value = (key: string) => {
-    const item = note.details[key];
-    return typeof item === "string" ? item : "";
-  };
-  const rows = [
-    ["Grade", value("grade")],
-    ["Date of birth", value("dob")],
-    ["Father", value("fatherName")],
-    ["Mother", value("motherName")],
-    ["Address", value("currentAddress")],
-  ].filter(([, text]) => text);
-
-  if (note.kind !== "application" || (rows.length === 0 && note.documents.length === 0)) return null;
-
-  return (
-    <div className="mt-3 border-t border-line pt-3">
-      {rows.length ? (
-        <dl className="grid gap-x-6 gap-y-1 text-xs text-muted sm:grid-cols-2">
-          {rows.map(([label, text]) => (
-            <div key={label} className="flex gap-1">
-              <dt className="shrink-0 font-medium text-ink">{label}:</dt>
-              <dd>{text}</dd>
-            </div>
-          ))}
-        </dl>
-      ) : null}
-      {note.documents.length ? (
-        <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-xs">
-          {note.documents.map((document) => (
-            <li key={`${document.label}-${document.name}`}>
-              <a
-                className="underline decoration-accent underline-offset-4 hover:text-accent"
-                href={document.url}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {document.label}
+    <div className="admin-office-grid">
+      <section className="admin-surface min-w-0">
+        <h2 className="admin-section-title">Public downloads</h2>
+        <label className="admin-item block text-sm text-ink">
+          Upload a PDF, up to 10 MB
+          <input
+            className="mt-2 block w-full text-sm"
+            type="file"
+            accept="application/pdf"
+            disabled={busy}
+            onChange={(event) => {
+              const file = event.target.files?.[0];
+              event.target.value = "";
+              void onFile(file);
+            }}
+          />
+        </label>
+        <p className="mt-3 text-sm text-muted" role="status">{busy ? "Uploading…" : success}</p>
+        {error ? <p className="mt-3 admin-error" role="alert">{error}</p> : null}
+        {files === null ? <p className="admin-message admin-error" role="alert">Downloads could not be loaded. Check Supabase and refresh the page.</p> : null}
+        <ul className="divide-y divide-line">
+          {files?.map((file) => (
+            <li key={file.id} className="break-words py-3 text-sm">
+              <a className="underline decoration-accent underline-offset-4" href={file.url}>
+                {file.name}
               </a>
             </li>
           ))}
+          {files?.length === 0 ? (
+            <li className="py-3 text-sm text-muted">No PDFs published yet.</li>
+          ) : null}
         </ul>
-      ) : null}
+      </section>
+      <section className="admin-surface min-w-0">
+        <h2 className="admin-section-title">Applications and enquiries</h2>
+        {notes === null ? <p className="admin-message admin-error" role="alert">Applications could not be loaded. Check Supabase and refresh the page.</p> : null}
+        <ul className="grid gap-3">
+          {notes?.map((note) => (
+            <li key={note.id} className="admin-item break-words text-sm">
+              <p className="font-semibold text-ink">
+                {note.kind === "application" ? "Application" : "Enquiry"} · {note.studentName}
+                {note.className ? `, ${note.className}` : ""}
+              </p>
+              <p className="text-muted">
+                {note.parentName} · {note.phone}
+              </p>
+              {note.email ? <a className="w-fit underline underline-offset-4" href={`mailto:${note.email}`}>{note.email}</a> : null}
+              {note.kind === "note" ? <p className="leading-relaxed">{note.message}</p> : null}
+              <Link
+                href={`/admin/office/${note.id}${page > 1 ? `?page=${page}` : ""}`}
+                prefetch={false}
+                className="admin-button admin-button-secondary w-fit"
+              >
+                {note.kind === "application" ? "View application" : "View enquiry"}
+              </Link>
+            </li>
+          ))}
+          {notes?.length === 0 ? <li className="text-sm text-muted">{page === 1 ? "No applications or enquiries yet." : "No submissions on this page."}</li> : null}
+        </ul>
+        {page > 1 || hasNext ? (
+          <nav className="admin-savebar" aria-label="Submission pages">
+            {page > 1 ? <Link className="admin-button admin-button-secondary" href={page === 2 ? "/admin/office" : `/admin/office?page=${page - 1}`}>Previous</Link> : null}
+            <span>Page {page}</span>
+            {hasNext ? <Link className="admin-button admin-button-secondary" href={`/admin/office?page=${page + 1}`}>Next</Link> : null}
+          </nav>
+        ) : null}
+      </section>
     </div>
   );
 }

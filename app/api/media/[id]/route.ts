@@ -27,7 +27,7 @@ export async function GET(
     if (signed.error || !signed.data?.signedUrl) {
       return new NextResponse("Not found", { status: 404 });
     }
-    return NextResponse.redirect(signed.data.signedUrl);
+    return NextResponse.redirect(signed.data.signedUrl, { headers: { "Cache-Control": "private, no-store" } });
   }
 
   return NextResponse.redirect(publicObjectUrl(String(data.bucket), String(data.path)));

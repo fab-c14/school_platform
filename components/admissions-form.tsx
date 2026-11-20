@@ -240,6 +240,8 @@ export function AdmissionsForm({
         referral: fieldValue(data, "referral"),
         sibling: fieldValue(data, "sibling"),
         photoConsent,
+        declared,
+        agrees,
         documents: uploaded,
       }),
     });

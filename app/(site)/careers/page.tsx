@@ -1,12 +1,10 @@
 import Link from "next/link";
 import {
   ArrowUpRightIcon,
-  BriefcaseIcon,
   CheckCircleIcon,
   GraduationCapIcon,
   HeartIcon,
   LightbulbIcon,
-  MapPinIcon,
   PhoneIcon,
   UsersThreeIcon,
 } from "@phosphor-icons/react/dist/ssr";

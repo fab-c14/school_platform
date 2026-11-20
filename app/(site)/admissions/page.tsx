@@ -1,17 +1,15 @@
 import Link from "next/link";
 import {
-  ArrowDownIcon,
   ArrowUpRightIcon,
   CheckCircleIcon,
-  ClockIcon,
   FilePdfIcon,
-  GraduationCapIcon,
   HeartIcon,
-  InfoIcon,
   PhoneIcon,
   ShieldCheckIcon,
 } from "@phosphor-icons/react/dist/ssr";
 import { BreezeCut } from "@/components/breeze-cut";
+import { NewBadge } from "@/components/new-badge";
+import { formatNewsDate } from "@/content/site";
 import { DOCUMENT_SLOTS } from "@/lib/admissions";
 import { pageMetadata } from "@/lib/metadata";
 import { getSite } from "@/lib/site-store";
@@ -38,6 +36,7 @@ const ageCriteria = [
 export default async function AdmissionsPage() {
   const site = await getSite();
   const page = site.admissions;
+  const notices = site.notifications.filter(({ audience }) => audience === "admissions" || audience === "both");
 
   return (
     <main className="w-full max-w-full overflow-x-clip">
@@ -66,6 +65,23 @@ export default async function AdmissionsPage() {
           </a>
         </div>
       </header>
+
+      {notices.length > 0 ? (
+        <section className="mx-auto max-w-[1400px] px-5 pb-12 md:px-8" aria-labelledby="admission-notices">
+          <div className="rounded-2xl border border-line bg-white p-5 sm:p-7">
+            <h2 id="admission-notices" className="text-xl font-semibold tracking-tight">Admissions notices</h2>
+            <ul className="mt-2 divide-y divide-line">
+              {notices.map((notice, index) => (
+                <li key={index} className="flex flex-wrap items-baseline gap-x-4 gap-y-1 py-3">
+                  {notice.date ? <time dateTime={notice.date} className="text-sm text-muted">{formatNewsDate(notice.date)}</time> : null}
+                  <span className="font-medium wrap-anywhere">{notice.title}</span>
+                  {notice.isNew ? <NewBadge /> : null}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      ) : null}
 
       {/* Step by step process */}
       <section className="relative overflow-hidden bg-[#f6ebe4]">

@@ -1,3 +1,5 @@
+import type { SchoolNotice } from "@/content/notices";
+
 /**
  * All public copy lives here.
  * Replace names, dates, and sentences when the school sends final text.
@@ -289,6 +291,7 @@ export const defaultSite = {
       },
     ],
   },
+  notifications: [] as SchoolNotice[],
   news: {
     title: "News",
     description: "Photographs and notices from Welkin International School.",

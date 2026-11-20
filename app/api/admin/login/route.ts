@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import {
   SESSION_COOKIE,
   createSessionToken,
-  passwordMatches,
+  credentialsMatch,
   sessionCookieOptions,
 } from "@/lib/auth";
 
@@ -19,25 +19,28 @@ export async function POST(request: Request) {
     );
   }
 
+  let email = "";
   let password = "";
   try {
-    const body = (await request.json()) as { password?: string };
+    const body = (await request.json()) as { email?: string; password?: string };
+    email = String(body.email ?? "");
     password = String(body.password ?? "");
   } catch {
+    email = "";
     password = "";
   }
 
-  if (!process.env.ADMIN_PASSWORD || !process.env.AUTH_SECRET) {
+  if (!process.env.ADMIN_EMAIL || !process.env.ADMIN_PASSWORD || !process.env.AUTH_SECRET) {
     return NextResponse.json(
       { error: "Admin login is not configured on this server." },
       { status: 500 },
     );
   }
 
-  if (!passwordMatches(password)) {
+  if (!credentialsMatch(email, password)) {
     const prev = current && current.reset > now ? current : { count: 0, reset: now + 60_000 };
     attempts.set(ip, { count: prev.count + 1, reset: prev.reset });
-    return NextResponse.json({ error: "That password is not right." }, { status: 401 });
+    return NextResponse.json({ error: "That email or password is not right." }, { status: 401 });
   }
 
   attempts.delete(ip);

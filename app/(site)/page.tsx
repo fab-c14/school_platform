@@ -53,7 +53,7 @@ export default async function HomePage() {
       />
 
       <NotificationMarquee
-        notices={site.news.items.map(({ date, title, isNew }) => ({ date, title, isNew }))}
+        notices={site.notifications.filter((notice) => notice.audience !== "admissions")}
       />
 
       <section className="relative overflow-hidden bg-[#f6ebe4]">

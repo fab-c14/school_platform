@@ -8,13 +8,20 @@ function secret() {
   return process.env.AUTH_SECRET ?? "";
 }
 
-export function passwordMatches(input: string) {
-  const expected = process.env.ADMIN_PASSWORD ?? "";
-  if (!expected || !input) return false;
+function sameSecret(input: string, expected: string) {
   const left = Buffer.from(input);
   const right = Buffer.from(expected);
   if (left.length !== right.length) return false;
   return timingSafeEqual(left, right);
+}
+
+export function credentialsMatch(email: string, password: string) {
+  const expectedEmail = (process.env.ADMIN_EMAIL ?? "").trim().toLowerCase();
+  const expectedPassword = process.env.ADMIN_PASSWORD ?? "";
+  if (!expectedEmail || !expectedPassword || !email || !password) return false;
+  const emailOk = sameSecret(email.trim().toLowerCase(), expectedEmail);
+  const passwordOk = sameSecret(password, expectedPassword);
+  return emailOk && passwordOk;
 }
 
 export function createSessionToken() {

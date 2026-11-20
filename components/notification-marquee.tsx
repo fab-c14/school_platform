@@ -9,13 +9,8 @@ export type Notice = {
 };
 
 export function NotificationMarquee({ notices }: { notices: Notice[] }) {
-  const items: Notice[] = [
-    { date: "", title: "Admissions Open for Session 2026-27 (Nursery to Grade 10)", isNew: true },
-    ...(notices.length
-      ? notices.map((n, i) => ({ ...n, isNew: n.isNew ?? i < 2 }))
-      : [{ date: "", title: "New school information will appear here.", isNew: false }]),
-  ];
-  const repeated = [...items, ...items];
+  if (!notices.length) return null;
+  const repeated = [...notices, ...notices];
 
   return (
     <section className="border-b border-line bg-white text-ink" aria-label="School notifications">

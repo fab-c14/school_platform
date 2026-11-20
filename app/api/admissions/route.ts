@@ -104,10 +104,12 @@ export async function POST(request: Request) {
     referral: text(body.referral),
     sibling: text(body.sibling),
     photoConsent: Boolean(body.photoConsent),
+    declared: typeof body.declared === "boolean" ? body.declared : undefined,
+    agrees: typeof body.agrees === "boolean" ? body.agrees : undefined,
   };
 
   if (!supabaseConfigured()) {
-    return NextResponse.json({ stored: false, mailed: false });
+    return NextResponse.json({ error: "The admissions system is unavailable. Try again later or call the school." }, { status: 503 });
   }
 
   const parentParts = [fatherName, details.motherName, details.localGuardian ? details.guardianName : ""].filter(Boolean);

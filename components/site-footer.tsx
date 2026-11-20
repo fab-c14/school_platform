@@ -2,8 +2,6 @@ import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
 
-type FooterLink = { href: string; label: string };
-
 export function SiteFooter({
   name,
   note,
@@ -16,7 +14,6 @@ export function SiteFooter({
   phoneAltDisplay,
   email,
   contactLabel,
-  nav,
 }: {
   name: string;
   note: string;
@@ -29,7 +26,6 @@ export function SiteFooter({
   phoneAltDisplay: string;
   email: string;
   contactLabel: string;
-  nav: FooterLink[];
 }) {
   return (
     <footer className="overflow-hidden bg-deep text-paper">

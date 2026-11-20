@@ -16,10 +16,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Supabase is not connected." }, { status: 503 });
   }
 
-  const form = await request.formData();
+  const form = await request.formData().catch(() => null);
+  if (!form) return NextResponse.json({ error: "Choose a file and try again." }, { status: 400 });
   const file = form.get("file");
   const kind = form.get("kind") === "document" ? "document" : "image";
-  if (!(file instanceof File)) {
+  if (!(file instanceof File) || file.size === 0) {
     return NextResponse.json({ error: "Choose a file." }, { status: 400 });
   }
 

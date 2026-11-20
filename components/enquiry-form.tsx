@@ -3,7 +3,6 @@
 import { useState, type FormEvent } from "react";
 type FormCopy = {
   note: string;
-  success: string;
   submit: string;
   fields: {
     parent: string;
@@ -22,6 +21,7 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export function EnquiryForm({ copy }: { copy: FormCopy }) {
   const [errors, setErrors] = useState<Errors>({});
   const [sent, setSent] = useState("");
+  const [busy, setBusy] = useState(false);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -44,6 +44,7 @@ export function EnquiryForm({ copy }: { copy: FormCopy }) {
     setErrors(next);
     if (Object.keys(next).length > 0) return;
 
+    setBusy(true);
     const response = await fetch("/api/apply", {
       method: "POST",
       headers: { "content-type": "application/json" },
@@ -56,13 +57,14 @@ export function EnquiryForm({ copy }: { copy: FormCopy }) {
         message,
         kind: copy.fields.className ? "application" : "note",
       }),
-    });
-    const body = (await response.json().catch(() => null)) as { stored?: boolean; error?: string } | null;
-    if (!response.ok) {
+    }).catch(() => null);
+    const body = (await response?.json().catch(() => null)) as { stored?: boolean; error?: string } | null | undefined;
+    setBusy(false);
+    if (!response?.ok || !body?.stored) {
       setErrors({ message: body?.error || "The office record could not be saved." });
       return;
     }
-    setSent(body?.stored ? "Saved for the office. No email was sent. Call the school if you need an answer today." : copy.success);
+    setSent("Your message was saved for the school office.");
   }
 
   if (sent) {
@@ -135,9 +137,10 @@ export function EnquiryForm({ copy }: { copy: FormCopy }) {
       </div>
       <button
         type="submit"
-        className="inline-flex w-fit items-center bg-accent px-5 py-3 text-sm text-white active:scale-[0.98]"
+        disabled={busy}
+        className="inline-flex w-fit items-center bg-accent px-5 py-3 text-sm text-white active:scale-[0.98] disabled:opacity-60"
       >
-        {copy.submit}
+        {busy ? "Sending…" : copy.submit}
       </button>
     </form>
   );

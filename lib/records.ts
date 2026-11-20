@@ -15,7 +15,7 @@ export type StoredApplicationDocument = {
   url: string;
 };
 
-export type StoredNote = {
+export type NoteSummary = {
   id: string;
   kind: "application" | "note";
   parentName: string;
@@ -24,11 +24,18 @@ export type StoredNote = {
   email: string;
   phone: string;
   message: string;
-  details: Record<string, unknown>;
-  documents: StoredApplicationDocument[];
   status: string;
   createdAt: string;
 };
+
+export type StoredNote = NoteSummary & {
+  details: Record<string, unknown>;
+  documents: StoredApplicationDocument[];
+};
+
+const summaryColumns = "id,kind,parent_name,student_name,class_name,email,phone,message,status,created_at";
+const inboxPageSize = 20;
+const uuid = /^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$/i;
 
 type FileRow = {
   id: string;
@@ -49,73 +56,86 @@ function asFile(row: FileRow): StoredFile {
   };
 }
 
-async function readFiles(kind?: StoredFile["kind"], bucket?: string) {
-  if (!supabaseConfigured()) return [];
-  const supabase = getSupabase();
-  let query = supabase.from("documents").select("id,name,bucket,path,kind,created_at").order("created_at", { ascending: false }).limit(40);
-  if (kind) query = query.eq("kind", kind);
-  if (bucket) query = query.eq("bucket", bucket);
-  const { data, error } = await query;
-  if (error || !data) return [];
-  return (data as FileRow[]).map(asFile);
-}
-
 export async function listPublicDocuments() {
   "use cache";
   cacheTag("documents");
-  cacheLife("max");
-  // Admission papers live in the private admissions bucket and must never be
-  // listed on the public downloads page.
-  return readFiles("document", "documents");
-}
-
-export async function listFilesForAdmin() {
-  return readFiles();
-}
-
-export async function listNotesForAdmin() {
   if (!supabaseConfigured()) return [];
-  const supabase = getSupabase();
-  const { data, error } = await supabase
-    .from("applications")
-    .select("id,kind,parent_name,student_name,class_name,email,phone,message,details,documents,status,created_at")
+  try {
+    const files = await readPublicDownloads();
+    cacheLife("max");
+    return files;
+  } catch {
+    cacheLife({ stale: 30, revalidate: 60, expire: 300 });
+    return [];
+  }
+}
+
+export async function readPublicDownloads() {
+  const { data, error } = await getSupabase()
+    .from("documents")
+    .select("id,name,bucket,path,kind,created_at")
+    .eq("kind", "document")
+    .eq("bucket", "documents")
     .order("created_at", { ascending: false })
     .limit(40);
-  if (error || !data) return [];
-  return data.map((row) => {
-    const documents = Array.isArray(row.documents)
-      ? row.documents
-          .filter((item): item is Record<string, unknown> => typeof item === "object" && item !== null)
-          .map((item) => {
-            const storedUrl = typeof item.url === "string" ? item.url : "";
-            const bucket = String(item.bucket ?? "");
-            const url =
-              storedUrl.startsWith("/api/media/")
-                ? storedUrl
-                : bucket === "admissions"
-                  ? ""
-                  : publicObjectUrl(bucket || "documents", String(item.path ?? ""));
-            return {
-              label: String(item.label ?? "Document"),
-              name: String(item.name ?? ""),
-              url,
-            };
-          })
-          .filter((item) => item.url)
-      : [];
-    return {
-      id: String(row.id),
-      kind: row.kind === "application" ? "application" : "note",
-      parentName: String(row.parent_name),
-      studentName: String(row.student_name),
-      className: String(row.class_name ?? ""),
-      email: String(row.email ?? ""),
-      phone: String(row.phone),
-      message: String(row.message),
-      details: typeof row.details === "object" && row.details !== null ? (row.details as Record<string, unknown>) : {},
-      documents,
-      status: String(row.status ?? "new"),
-      createdAt: String(row.created_at),
-    } satisfies StoredNote;
-  });
+  if (error) throw new Error("Downloads could not be loaded from Supabase.");
+  return (data as FileRow[]).map(asFile);
+}
+
+function asNoteSummary(row: Record<string, unknown>): NoteSummary {
+  return {
+    id: String(row.id),
+    kind: row.kind === "application" ? "application" : "note",
+    parentName: String(row.parent_name ?? ""),
+    studentName: String(row.student_name ?? ""),
+    className: String(row.class_name ?? ""),
+    email: String(row.email ?? ""),
+    phone: String(row.phone ?? ""),
+    message: String(row.message ?? ""),
+    status: String(row.status ?? "new"),
+    createdAt: String(row.created_at ?? ""),
+  };
+}
+
+export async function listNotesForAdmin(page: number) {
+  const start = (page - 1) * inboxPageSize;
+  const { data, error } = await getSupabase()
+    .from("applications")
+    .select(summaryColumns)
+    .order("created_at", { ascending: false })
+    .order("id", { ascending: false })
+    .range(start, start + inboxPageSize);
+  if (error) throw new Error("Applications and enquiries could not be loaded from Supabase.");
+  return { notes: data.slice(0, inboxPageSize).map(asNoteSummary), hasNext: data.length > inboxPageSize };
+}
+
+export async function readNoteForAdmin(id: string): Promise<StoredNote | null> {
+  if (!uuid.test(id)) return null;
+  const { data, error } = await getSupabase()
+    .from("applications")
+    .select(`${summaryColumns},details,documents`)
+    .eq("id", id)
+    .maybeSingle();
+  if (error) throw new Error("This submission could not be loaded from Supabase.");
+  if (!data) return null;
+
+  const documents: StoredApplicationDocument[] = [];
+  if (Array.isArray(data.documents)) {
+    for (const item of data.documents) {
+      if (!item || typeof item !== "object") continue;
+      const storedId = typeof item.url === "string" && item.url.startsWith("/api/media/") ? item.url.slice(11) : "";
+      const id = uuid.test(storedId) ? storedId : String(item.id ?? "");
+      const url = uuid.test(id)
+        ? `/api/media/${id}`
+        : (item.bucket === "documents" || !item.bucket) && typeof item.path === "string" && item.path
+          ? publicObjectUrl("documents", item.path)
+          : "";
+      if (url) documents.push({ label: String(item.label || "Document"), name: String(item.name ?? ""), url });
+    }
+  }
+  return {
+    ...asNoteSummary(data),
+    details: data.details && typeof data.details === "object" && !Array.isArray(data.details) ? data.details : {},
+    documents,
+  };
 }

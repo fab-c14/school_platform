@@ -1,6 +1,7 @@
 import { cacheLife, cacheTag } from "next/cache";
 import { connection } from "next/server";
 import { defaultSite, type SiteContent } from "@/content/site";
+import { isNoticeAudience, isNoticeDate } from "@/content/notices";
 import { getSupabase, supabaseConfigured } from "@/lib/supabase";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -31,6 +32,19 @@ function asText(value: unknown, fallback: string, max = 4000) {
 }
 
 function sanitize(value: unknown, fallback: unknown, key = ""): unknown {
+  if (key === "notifications") {
+    const rows = Array.isArray(value) ? value : defaultSite.notifications;
+    return rows.slice(0, 20).map((item) => {
+      const source = isRecord(item) ? item : {};
+      const date = typeof source.date === "string" ? source.date.trim() : "";
+      return {
+        date: isNoticeDate(date) ? date : "",
+        title: asText(source.title, ""),
+        isNew: source.isNew === true,
+        audience: isNoticeAudience(source.audience) ? source.audience : "home",
+      };
+    }).filter((notice) => notice.title);
+  }
   if (key === "nav" && Array.isArray(fallback)) {
     const incoming = Array.isArray(value) ? value : [];
     return fallback.map((item, index) => {
@@ -74,7 +88,8 @@ function sanitize(value: unknown, fallback: unknown, key = ""): unknown {
   if (Array.isArray(fallback)) {
     const incoming = Array.isArray(value) ? value : [];
     const sample = fallback[0];
-    const rows = (incoming.length ? incoming : fallback).slice(0, 20);
+    const useIncoming = incoming.length > 0 || (Array.isArray(value) && key === "items");
+    const rows = (useIncoming ? incoming : fallback).slice(0, 20);
     return rows.map((item) => sanitize(item, sample));
   }
 
@@ -89,9 +104,16 @@ function sanitize(value: unknown, fallback: unknown, key = ""): unknown {
 
   if (typeof fallback === "string") {
     if (key === "date") {
-      return typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value) ? value : fallback;
+      if (typeof value !== "string") return fallback;
+      const trimmed = value.trim();
+      if (!trimmed) return "";
+      return /^\d{4}-\d{2}-\d{2}$/.test(trimmed) ? trimmed : fallback;
     }
     return asText(value, fallback);
+  }
+
+  if (typeof fallback === "boolean") {
+    return typeof value === "boolean" ? value : fallback;
   }
 
   return fallback;
@@ -101,17 +123,24 @@ export function normalizeSite(input: unknown): SiteContent {
   return sanitize(input, defaultSite) as SiteContent;
 }
 
-async function readStored() {
-  const supabase = getSupabase();
-  const { data, error } = await supabase.from("site_content").select("body").eq("key", "site").maybeSingle();
-  if (error) throw new Error("The site record could not be read. Run supabase/schema.sql in the Supabase SQL editor.");
-  if (!data) {
-    const body = normalizeSite(defaultSite);
-    const inserted = await supabase.from("site_content").insert({ key: "site", body });
-    if (inserted.error) throw new Error("The site record could not be created.");
-    return body;
+function databaseError(message: string | undefined, fallback: string) {
+  const text = message ?? "";
+  if (text.includes("fetch failed")) {
+    return "Unable to reach Supabase. Check the project URL in NEXT_PUBLIC_SUPABASE_URL and confirm the project is online.";
   }
-  return normalizeSite(data.body);
+  if (text.includes("521") || text.includes("Web server is down") || text.includes("<!DOCTYPE")) {
+    return "The Supabase project is paused or its server is down. Restore it in the Supabase dashboard, then try again.";
+  }
+  if (text.toLowerCase().includes("permission denied")) {
+    return "Supabase denied access. Check the server key and the grants in supabase/schema.sql.";
+  }
+  return text.trim() || fallback;
+}
+
+async function readStored(supabase = getSupabase()) {
+  const { data, error } = await supabase.from("site_content").select("body,updated_at").eq("key", "site").maybeSingle();
+  if (error) throw new Error(databaseError(error.message, "The site record could not be read."));
+  return { content: normalizeSite(data?.body), version: data?.updated_at as string | undefined };
 }
 
 function withUrl(content: SiteContent) {
@@ -124,32 +153,50 @@ function withUrl(content: SiteContent) {
 async function readCachedSite() {
   "use cache";
   cacheTag("site");
-  cacheLife("max");
-  return withUrl(await readStored());
-}
-
-export async function getSite() {
-  if (!supabaseConfigured()) return withUrl(normalizeSite(defaultSite));
   try {
-    return await readCachedSite();
+    const stored = await readStored();
+    cacheLife("max");
+    return withUrl(stored.content);
   } catch {
+    cacheLife({ stale: 30, revalidate: 60, expire: 300 });
     return withUrl(normalizeSite(defaultSite));
   }
 }
 
-export async function readSiteForAdmin() {
-  await connection();
-  return readStored();
+export async function getSite() {
+  if (!supabaseConfigured()) return withUrl(normalizeSite(defaultSite));
+  return readCachedSite();
 }
 
-export async function writeSite(input: unknown) {
+export async function readSiteForAdmin() {
+  await connection();
+  return (await readStored()).content;
+}
+
+function prepareSite(input: unknown) {
   const content = normalizeSite(input);
   const digits = content.contact.phoneDisplay.replace(/[^\d+]/g, "");
   content.contact.phoneHref = digits ? `tel:${digits}` : defaultSite.contact.phoneHref;
   const altDigits = content.contact.phoneAltDisplay.replace(/[^\d+]/g, "");
   content.contact.phoneAltHref = altDigits ? `tel:${altDigits}` : defaultSite.contact.phoneAltHref;
-  const supabase = getSupabase();
-  const { error } = await supabase.from("site_content").upsert({ key: "site", body: content, updated_at: new Date().toISOString() });
-  if (error) throw new Error("The site record could not be saved.");
   return content;
+}
+
+export class SiteWriteConflict extends Error {}
+
+export async function writeSite(changes: Record<string, unknown>) {
+  const supabase = getSupabase();
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const { content, version } = await readStored(supabase);
+    const body = prepareSite({ ...content, ...changes });
+    const updated_at = new Date(Math.max(Date.now(), version ? Date.parse(version) + 1 : 0)).toISOString();
+    const table = supabase.from("site_content");
+    const write = version
+      ? table.update({ body, updated_at }).eq("key", "site").eq("updated_at", version)
+      : table.upsert({ key: "site", body, updated_at }, { onConflict: "key", ignoreDuplicates: true });
+    const { data, error } = await write.select("key").maybeSingle();
+    if (error) throw new Error(databaseError(error.message, "The site record could not be saved."));
+    if (data) return body;
+  }
+  throw new SiteWriteConflict("Someone else is saving changes. Try saving again.");
 }

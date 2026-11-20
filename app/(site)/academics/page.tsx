@@ -5,11 +5,8 @@ import {
   CheckCircleIcon,
   CompassIcon,
   FlaskIcon,
-  GraduationCapIcon,
   PhoneIcon,
-  SparkleIcon,
   TranslateIcon,
-  TrophyIcon,
 } from "@phosphor-icons/react/dist/ssr";
 import { BreezeCut } from "@/components/breeze-cut";
 import { Photo } from "@/components/photo";
@@ -204,8 +201,8 @@ export default async function AcademicsPage() {
                 <li className="flex items-start gap-3">
                   <CheckCircleIcon size={22} weight="fill" className="mt-0.5 text-accent shrink-0" />
                   <div>
-                    <strong className="text-ink">Daily Assembly & Qira'at:</strong>
-                    <p className="text-sm text-muted">Every morning begins with recitation of the Holy Qur'an, supplications for knowledge, and brief student reflections.</p>
+                    <strong className="text-ink">Daily Assembly & Qira&apos;at:</strong>
+                    <p className="text-sm text-muted">Every morning begins with recitation of the Holy Qur&apos;an, supplications for knowledge, and brief student reflections.</p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">

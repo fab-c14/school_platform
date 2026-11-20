@@ -3,7 +3,6 @@ import {
   ArrowDownIcon,
   ArrowUpRightIcon,
   FilePdfIcon,
-  FolderOpenIcon,
   PhoneIcon,
   PrinterIcon,
   ShieldCheckIcon,

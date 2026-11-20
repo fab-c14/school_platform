@@ -1,20 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { createContext, useContext, useState } from "react";
+import { adminRequest } from "@/components/admin/request";
 
-export const fieldClass =
-  "w-full border border-line bg-white px-3 py-2 text-sm text-ink outline-none focus:border-accent";
+export const fieldClass = "admin-input";
+export const UploadActivity = createContext<(busy: boolean) => void>(() => {});
 
 export function TextField({
   label,
   value,
   onChange,
   rows,
+  type = "text",
+  required,
+  maxLength,
 }: {
   label: string;
   value: string;
   onChange: (value: string) => void;
   rows?: number;
+  type?: "text" | "date";
+  required?: boolean;
+  maxLength?: number;
 }) {
   return (
     <label className="grid gap-2 text-sm text-ink">
@@ -22,7 +29,7 @@ export function TextField({
       {rows ? (
         <textarea className={fieldClass} rows={rows} value={value} onChange={(event) => onChange(event.target.value)} />
       ) : (
-        <input className={fieldClass} value={value} onChange={(event) => onChange(event.target.value)} />
+        <input className={fieldClass} type={type} required={required} maxLength={maxLength} value={value} onChange={(event) => onChange(event.target.value)} />
       )}
     </label>
   );
@@ -33,49 +40,63 @@ export function ImageField({
   src,
   alt,
   onChange,
+  editAlt = true,
 }: {
   label: string;
   src: string;
   alt: string;
   onChange: (next: { src: string; alt: string }) => void;
+  editAlt?: boolean;
 }) {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const setUploading = useContext(UploadActivity);
 
   async function onFile(file: File | undefined) {
     if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      setError("Choose a photo up to 5 MB.");
+      return;
+    }
     setBusy(true);
+    setUploading(true);
     setError("");
     const data = new FormData();
     data.set("file", file);
-    const response = await fetch("/api/admin/upload", { method: "POST", body: data });
-    const body = (await response.json()) as { src?: string; error?: string };
-    setBusy(false);
-    if (!response.ok || !body.src) {
-      setError(body.error || "Upload failed.");
-      return;
+    try {
+      const body = await adminRequest<{ src: string }>("/api/admin/upload", { method: "POST", body: data });
+      onChange({ src: body.src, alt });
+    } catch (error) {
+      setError((error as Error).message);
+    } finally {
+      setBusy(false);
+      setUploading(false);
     }
-    onChange({ src: body.src, alt });
   }
 
   return (
-    <div className="grid gap-3 border border-line bg-paper p-3">
+    <div className="admin-item">
       <p className="text-sm text-ink">{label}</p>
       {/* Admin preview of a file the editor just chose. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={src} alt="" className="h-36 w-full object-cover" />
-      <TextField label="Description of the photo" value={alt} onChange={(next) => onChange({ src, alt: next })} />
+      <img src={src} alt={alt} className="h-36 w-full rounded-md object-cover" />
+      {editAlt ? <TextField label="Description of the photo" value={alt} onChange={(next) => onChange({ src, alt: next })} /> : null}
       <label className="text-sm text-muted">
-        Replace photo
+        Replace photo (JPG, PNG or WebP, up to 5 MB)
         <input
           className="mt-2 block w-full text-sm"
           type="file"
           accept="image/jpeg,image/png,image/webp"
-          onChange={(event) => onFile(event.target.files?.[0])}
+          disabled={busy}
+          onChange={(event) => {
+            const file = event.target.files?.[0];
+            event.target.value = "";
+            void onFile(file);
+          }}
         />
       </label>
       {busy ? <p className="text-sm text-muted">Uploading…</p> : null}
-      {error ? <p className="text-sm text-accent">{error}</p> : null}
+      {error ? <p className="admin-error" role="alert">{error}</p> : null}
     </div>
   );
 }

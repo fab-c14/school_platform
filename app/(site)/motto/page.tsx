@@ -61,7 +61,6 @@ const emblemSymbols = [
 ];
 
 export default async function MottoPage() {
-  const site = await getSite();
 
   return (
     <main className="w-full max-w-full overflow-x-clip">
